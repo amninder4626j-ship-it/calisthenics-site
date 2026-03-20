@@ -1,0 +1,3271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calisthenics & Bodyweight Mastery Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* ========== CSS VARIABLES ========== */
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #111111;
+            --bg-card: #1a1a1a;
+            --bg-card-hover: #222222;
+            --bg-input: #1e1e1e;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --text-muted: #666666;
+            --accent: #39ff14;
+            --accent-dim: rgba(57, 255, 20, 0.15);
+            --accent-dark: #2bcc10;
+            --accent-glow: rgba(57, 255, 20, 0.4);
+            --border: #2a2a2a;
+            --danger: #ff4444;
+            --warning: #ffaa00;
+            --info: #00aaff;
+            --success: #39ff14;
+            --gradient: linear-gradient(135deg, #39ff14, #00cc88);
+            --shadow: 0 4px 20px rgba(0,0,0,0.5);
+            --shadow-accent: 0 0 20px rgba(57,255,20,0.2);
+            --radius: 12px;
+            --radius-sm: 8px;
+            --radius-lg: 20px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        /* Light Mode */
+        body.light-mode {
+            --bg-primary: #f5f5f5;
+            --bg-secondary: #ffffff;
+            --bg-card: #ffffff;
+            --bg-card-hover: #f0f0f0;
+            --bg-input: #f0f0f0;
+            --text-primary: #111111;
+            --text-secondary: #555555;
+            --text-muted: #999999;
+            --accent: #22c55e;
+            --accent-dim: rgba(34,197,94,0.15);
+            --accent-dark: #16a34a;
+            --accent-glow: rgba(34,197,94,0.3);
+            --border: #e0e0e0;
+            --shadow: 0 4px 20px rgba(0,0,0,0.1);
+            --shadow-accent: 0 0 20px rgba(34,197,94,0.15);
+        }
+
+        /* ========== RESET ========== */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent) var(--bg-secondary);
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-secondary); }
+        ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 4px; }
+
+        body {
+            font-family: var(--font);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        a { color: var(--accent); text-decoration: none; transition: var(--transition); }
+        a:hover { color: var(--accent-dark); }
+
+        img { max-width: 100%; display: block; }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ========== NAVBAR ========== */
+        #navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(10,10,10,0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            transition: var(--transition);
+        }
+
+        body.light-mode #navbar {
+            background: rgba(255,255,255,0.9);
+        }
+
+        #navbar.scrolled {
+            box-shadow: var(--shadow);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--text-primary) !important;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-logo i {
+            color: var(--accent);
+            font-size: 1.4rem;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .nav-link {
+            color: var(--text-secondary) !important;
+            padding: 8px 14px;
+            border-radius: var(--radius-sm);
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--accent) !important;
+            background: var(--accent-dim);
+        }
+
+        .nav-dropdown {
+            position: relative;
+        }
+
+        .dropdown-toggle {
+            cursor: pointer;
+        }
+
+        .dropdown-toggle i {
+            font-size: 0.65rem;
+            margin-left: 4px;
+            transition: var(--transition);
+        }
+
+        .nav-dropdown:hover .dropdown-toggle i {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(8px);
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 8px;
+            min-width: 200px;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+            z-index: 100;
+        }
+
+        .nav-dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 10px 14px;
+            color: var(--text-secondary) !important;
+            border-radius: var(--radius-sm);
+            font-size: 0.85rem;
+            transition: var(--transition);
+        }
+
+        .dropdown-menu a:hover {
+            background: var(--accent-dim);
+            color: var(--accent) !important;
+            padding-left: 20px;
+        }
+
+        .dropdown-menu.large-menu {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            min-width: 420px;
+            gap: 2px;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            background: transparent;
+            color: var(--text-primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            font-size: 1rem;
+        }
+
+        .icon-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: var(--accent-dim);
+        }
+
+        .mobile-only { display: none; }
+
+        /* ========== MOBILE MENU ========== */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -320px;
+            width: 300px;
+            height: 100vh;
+            background: var(--bg-secondary);
+            z-index: 2000;
+            transition: right 0.4s cubic-bezier(0.4,0,0.2,1);
+            overflow-y: auto;
+            border-left: 1px solid var(--border);
+        }
+
+        .mobile-menu.open {
+            right: 0;
+        }
+
+        .mobile-menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border);
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--accent);
+        }
+
+        .mobile-menu-links {
+            padding: 10px;
+        }
+
+        .mobile-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            color: var(--text-secondary) !important;
+            border-radius: var(--radius-sm);
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .mobile-link.sub {
+            padding-left: 32px;
+            font-size: 0.85rem;
+        }
+
+        .mobile-link:hover {
+            background: var(--accent-dim);
+            color: var(--accent) !important;
+        }
+
+        .mobile-section-title {
+            padding: 16px 16px 6px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent);
+        }
+
+        .mobile-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 1999;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .mobile-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* ========== HERO ========== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            padding: 100px 20px 60px;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 50%, rgba(57,255,20,0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 50%, rgba(0,204,136,0.05) 0%, transparent 50%);
+            animation: heroGlow 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes heroGlow {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            100% { transform: translate(-30px, 20px) rotate(3deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            background: var(--accent-dim);
+            border: 1px solid rgba(57,255,20,0.3);
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 24px;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            letter-spacing: -2px;
+            animation: fadeInUp 0.6s ease 0.1s both;
+        }
+
+        .hero h1 .gradient-text {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 36px;
+            animation: fadeInUp 0.6s ease 0.2s both;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.6s ease 0.3s both;
+        }
+
+        /* ========== BUTTONS ========== */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 28px;
+            border-radius: var(--radius-sm);
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-family: var(--font);
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: var(--gradient);
+            color: #000;
+            box-shadow: 0 4px 15px rgba(57,255,20,0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(57,255,20,0.4);
+            color: #000 !important;
+        }
+
+        .btn-secondary {
+            background: var(--bg-card);
+            color: var(--text-primary) !important;
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent);
+            background: var(--accent-dim);
+            color: var(--accent) !important;
+            transform: translateY(-2px);
+        }
+
+        .btn-sm {
+            padding: 8px 18px;
+            font-size: 0.8rem;
+        }
+
+        .btn-lg {
+            padding: 16px 36px;
+            font-size: 1rem;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: #fff;
+        }
+
+        .btn-danger:hover {
+            background: #ff6666;
+            transform: translateY(-2px);
+        }
+
+        /* ========== SECTIONS ========== */
+        .section {
+            padding: 80px 20px;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 50px;
+        }
+
+        .section-header h2 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            font-weight: 800;
+            margin-bottom: 12px;
+            letter-spacing: -1px;
+        }
+
+        .section-header p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        /* ========== CARDS ========== */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 28px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--gradient);
+            transform: scaleX(0);
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            border-color: rgba(57,255,20,0.3);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-accent);
+        }
+
+        .card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card-icon {
+            width: 56px;
+            height: 56px;
+            background: var(--accent-dim);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            color: var(--accent);
+            margin-bottom: 18px;
+        }
+
+        .card h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* ========== GRID LAYOUTS ========== */
+        .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+        .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+
+        /* ========== SKILL PAGE ========== */
+        .skill-hero {
+            padding: 100px 20px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 0%, rgba(57,255,20,0.1) 0%, transparent 60%);
+        }
+
+        .difficulty-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+        }
+
+        .diff-beginner { background: rgba(57,255,20,0.2); color: #39ff14; border: 1px solid rgba(57,255,20,0.4); }
+        .diff-intermediate { background: rgba(255,170,0,0.2); color: #ffaa00; border: 1px solid rgba(255,170,0,0.4); }
+        .diff-advanced { background: rgba(255,68,68,0.2); color: #ff4444; border: 1px solid rgba(255,68,68,0.4); }
+        .diff-elite { background: rgba(170,0,255,0.2); color: #aa00ff; border: 1px solid rgba(170,0,255,0.4); }
+
+        .skill-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .skill-section {
+            margin-bottom: 40px;
+        }
+
+        .skill-section h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--accent);
+        }
+
+        .skill-section h3 i {
+            font-size: 1rem;
+        }
+
+        .progression-step {
+            display: flex;
+            gap: 16px;
+            padding: 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            margin-bottom: 12px;
+            transition: var(--transition);
+        }
+
+        .progression-step:hover {
+            border-color: var(--accent);
+            background: var(--bg-card-hover);
+        }
+
+        .step-number {
+            width: 36px;
+            height: 36px;
+            background: var(--accent-dim);
+            color: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+        }
+
+        .step-content h4 { font-size: 0.95rem; margin-bottom: 4px; }
+        .step-content p { font-size: 0.85rem; color: var(--text-secondary); }
+
+        .mistake-item {
+            display: flex;
+            gap: 12px;
+            padding: 12px 16px;
+            background: rgba(255,68,68,0.08);
+            border: 1px solid rgba(255,68,68,0.2);
+            border-radius: var(--radius-sm);
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+
+        .mistake-item i { color: var(--danger); margin-top: 3px; }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            margin: 20px 0;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .exercise-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            font-size: 0.8rem;
+            margin: 4px;
+            transition: var(--transition);
+        }
+
+        .exercise-chip:hover {
+            border-color: var(--accent);
+            background: var(--accent-dim);
+            color: var(--accent);
+        }
+
+        /* ========== TOOLS ========== */
+        .tool-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 100px 20px 60px;
+        }
+
+        .tool-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .tool-header h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .tool-header p {
+            color: var(--text-secondary);
+        }
+
+        /* Forms */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 12px 16px;
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            font-family: var(--font);
+            transition: var(--transition);
+            outline: none;
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-dim);
+        }
+
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23a0a0a0' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 36px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        /* BMI Result */
+        .bmi-result {
+            text-align: center;
+            padding: 30px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            margin-top: 24px;
+        }
+
+        .bmi-value {
+            font-size: 3.5rem;
+            font-weight: 900;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .bmi-category {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-top: 8px;
+        }
+
+        .bmi-scale {
+            display: flex;
+            margin-top: 20px;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            height: 8px;
+        }
+
+        .bmi-scale div { flex: 1; }
+        .bmi-scale .underweight { background: #00aaff; }
+        .bmi-scale .normal { background: #39ff14; }
+        .bmi-scale .overweight { background: #ffaa00; }
+        .bmi-scale .obese { background: #ff4444; }
+
+        /* Exercise Cards */
+        .exercise-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .exercise-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-accent);
+            border-color: rgba(57,255,20,0.3);
+        }
+
+        .exercise-card-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: var(--bg-input);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-size: 3rem;
+        }
+
+        .exercise-card-body {
+            padding: 16px;
+        }
+
+        .exercise-card-body h4 {
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+            text-transform: capitalize;
+        }
+
+        .exercise-tag {
+            display: inline-block;
+            padding: 3px 10px;
+            background: var(--accent-dim);
+            color: var(--accent);
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: capitalize;
+            margin: 2px;
+        }
+
+        /* Meal Plan */
+        .meal-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px;
+        }
+
+        .meal-card h4 {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            color: var(--accent);
+        }
+
+        .meal-card ul {
+            list-style: none;
+        }
+
+        .meal-card li {
+            padding: 6px 0;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .meal-card li:last-child { border: none; }
+
+        .meal-card li i { color: var(--accent); margin-right: 8px; width: 16px; }
+
+        /* Routine */
+        .routine-day {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            margin-bottom: 16px;
+            overflow: hidden;
+        }
+
+        .routine-day-header {
+            padding: 16px 20px;
+            background: var(--accent-dim);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .routine-day-header:hover { background: rgba(57,255,20,0.2); }
+
+        .routine-day-body {
+            padding: 16px 20px;
+        }
+
+        .routine-exercise {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.9rem;
+        }
+
+        .routine-exercise:last-child { border: none; }
+
+        .routine-exercise span:last-child {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        /* Warmup */
+        .warmup-step {
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            margin-bottom: 16px;
+            transition: var(--transition);
+        }
+
+        .warmup-step:hover {
+            border-color: var(--accent);
+            transform: translateX(4px);
+        }
+
+        .warmup-num {
+            width: 48px;
+            height: 48px;
+            background: var(--gradient);
+            color: #000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .warmup-info h4 { margin-bottom: 6px; }
+        .warmup-info p { color: var(--text-secondary); font-size: 0.85rem; }
+        .warmup-info .duration { color: var(--accent); font-weight: 600; font-size: 0.8rem; margin-top: 6px; }
+
+        /* FAQ */
+        .faq-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            margin-bottom: 12px;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 18px 20px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: var(--transition);
+            font-size: 0.95rem;
+        }
+
+        .faq-question:hover { color: var(--accent); }
+
+        .faq-question i { transition: var(--transition); color: var(--accent); }
+        .faq-item.open .faq-question i { transform: rotate(180deg); }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+
+        .faq-answer-content {
+            padding: 0 20px 18px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        /* Contact */
+        .contact-info-card {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            transition: var(--transition);
+        }
+
+        .contact-info-card:hover {
+            border-color: var(--accent);
+        }
+
+        .contact-info-card .ci-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--accent-dim);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        /* Workout Log */
+        .log-entry {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            margin-bottom: 10px;
+            transition: var(--transition);
+        }
+
+        .log-entry:hover { border-color: var(--accent); }
+
+        .log-entry-info h4 { font-size: 0.95rem; margin-bottom: 2px; }
+        .log-entry-info p { font-size: 0.8rem; color: var(--text-secondary); }
+
+        .log-entry-actions { display: flex; gap: 8px; }
+
+        .log-delete {
+            width: 32px;
+            height: 32px;
+            border: 1px solid rgba(255,68,68,0.3);
+            background: transparent;
+            color: var(--danger);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .log-delete:hover {
+            background: rgba(255,68,68,0.2);
+        }
+
+        /* Stats Row */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 16px;
+            margin: 30px 0;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 24px 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--accent);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        /* About */
+        .about-avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            margin: 0 auto 24px;
+            color: #000;
+            box-shadow: 0 0 40px var(--accent-glow);
+        }
+
+        /* ========== SCROLL TOP ========== */
+        .scroll-top-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 46px;
+            height: 46px;
+            background: var(--accent);
+            color: #000;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1rem;
+            z-index: 900;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px var(--accent-glow);
+        }
+
+        .scroll-top-btn.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-top-btn:hover {
+            transform: translateY(-4px);
+        }
+
+        /* ========== FOOTER ========== */
+        #footer {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border);
+            padding: 60px 0 0;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            padding-bottom: 40px;
+        }
+
+        .footer-col h3 {
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+            color: var(--accent);
+        }
+
+        .footer-col h4 {
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+
+        .footer-col p {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            line-height: 1.7;
+        }
+
+        .footer-col a {
+            display: block;
+            color: var(--text-secondary) !important;
+            font-size: 0.85rem;
+            padding: 4px 0;
+            transition: var(--transition);
+        }
+
+        .footer-col a:hover {
+            color: var(--accent) !important;
+            padding-left: 6px;
+        }
+
+        .footer-socials {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .footer-socials a {
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            padding: 0 !important;
+        }
+
+        .footer-socials a:hover {
+            background: var(--accent-dim);
+            border-color: var(--accent);
+            color: var(--accent) !important;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border);
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .footer-bottom p {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        /* ========== ANIMATIONS ========== */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(40px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .animate-in {
+            animation: fadeInUp 0.5s ease both;
+        }
+
+        .animate-delay-1 { animation-delay: 0.1s; }
+        .animate-delay-2 { animation-delay: 0.2s; }
+        .animate-delay-3 { animation-delay: 0.3s; }
+        .animate-delay-4 { animation-delay: 0.4s; }
+        .animate-delay-5 { animation-delay: 0.5s; }
+        .animate-delay-6 { animation-delay: 0.6s; }
+
+        /* Page transition */
+        #app {
+            animation: fadeIn 0.3s ease;
+            min-height: calc(100vh - 64px);
+        }
+
+        /* ========== TABS ========== */
+        .tabs {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 24px;
+            border-bottom: 1px solid var(--border);
+            overflow-x: auto;
+            padding-bottom: 0;
+        }
+
+        .tab-btn {
+            padding: 12px 24px;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: var(--transition);
+            font-family: var(--font);
+            white-space: nowrap;
+        }
+
+        .tab-btn:hover { color: var(--text-primary); }
+        .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+        /* ========== SEARCH ========== */
+        .search-box {
+            position: relative;
+            margin-bottom: 24px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 14px 16px 14px 48px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            font-family: var(--font);
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .search-box input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-dim);
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        /* Filter Pills */
+        .filter-pills {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+        }
+
+        .filter-pill {
+            padding: 8px 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: var(--font);
+            font-weight: 500;
+        }
+
+        .filter-pill:hover, .filter-pill.active {
+            background: var(--accent-dim);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        /* ========== LOADING ========== */
+        .loading-spinner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px;
+            gap: 16px;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* ========== TOAST ========== */
+        .toast-container {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 5000;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .toast {
+            padding: 12px 24px;
+            background: var(--bg-card);
+            border: 1px solid var(--accent);
+            border-radius: var(--radius-sm);
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            box-shadow: var(--shadow);
+            animation: toastIn 0.3s ease, toastOut 0.3s ease 2.7s both;
+        }
+
+        @keyframes toastIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes toastOut {
+            to { opacity: 0; transform: translateY(-20px); }
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 1024px) {
+            .nav-links { display: none; }
+            .mobile-only { display: flex; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.2rem; }
+            .section { padding: 50px 16px; }
+            .form-row { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; gap: 30px; }
+            .stats-row { grid-template-columns: 1fr 1fr; }
+            .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 1.8rem; letter-spacing: -1px; }
+            .hero p { font-size: 0.95rem; }
+            .card { padding: 20px; }
+            .nav-container { padding: 0 12px; }
+        }
+
+        /* Equipment filter tags */
+        .equip-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 12px;
+            background: rgba(0,170,255,0.1);
+            color: var(--info);
+            border: 1px solid rgba(0,170,255,0.3);
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        /* Notification badge */
+        .notif-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: inline-block;
+            margin-left: 4px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-muted);
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 16px;
+            color: var(--border);
+        }
+
+        .empty-state p {
+            font-size: 0.95rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="#home" class="nav-logo">
+                <i class="fas fa-dumbbell"></i>
+                <span>CalisthenicsMastery</span>
+            </a>
+            <div class="nav-links" id="navLinks">
+                <div class="nav-dropdown">
+                    <a href="#home" class="nav-link">Home</a>
+                </div>
+                <div class="nav-dropdown">
+                    <a href="#" class="nav-link dropdown-toggle">Skills <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-menu large-menu">
+                        <a href="#skill-muscleup">Muscle Up</a>
+                        <a href="#skill-handstand">Handstand</a>
+                        <a href="#skill-frontlever">Front Lever</a>
+                        <a href="#skill-planche">Planche</a>
+                        <a href="#skill-humanflag">Human Flag</a>
+                        <a href="#skill-backlever">Back Lever</a>
+                        <a href="#skill-lsit">L-Sit</a>
+                        <a href="#skill-pistolsquat">Pistol Squat</a>
+                        <a href="#skill-hspu">Handstand Push-up</a>
+                        <a href="#skill-vsit">V-Sit</a>
+                        <a href="#skill-oapu">One Arm Pull Up</a>
+                        <a href="#skill-oapushup">One Arm Push Up</a>
+                        <a href="#skill-oahs">One Arm Handstand</a>
+                        <a href="#skill-dragonflag">Dragon Flag</a>
+                    </div>
+                </div>
+                <div class="nav-dropdown">
+                    <a href="#" class="nav-link dropdown-toggle">Tools <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="#exercise-finder">Exercise Finder</a>
+                        <a href="#bmi-calculator">BMI Calculator</a>
+                        <a href="#diet-guide">Diet & Protein</a>
+                        <a href="#routine-generator">Routine Generator</a>
+                    </div>
+                </div>
+                <div class="nav-dropdown">
+                    <a href="#warmup" class="nav-link">Warm-up</a>
+                </div>
+                <div class="nav-dropdown">
+                    <a href="#faq" class="nav-link">FAQ</a>
+                </div>
+                <div class="nav-dropdown">
+                    <a href="#about" class="nav-link">About Us</a>
+                </div>
+                <div class="nav-dropdown">
+                    <a href="#contact" class="nav-link">Contact Us</a>
+                </div>
+            </div>
+            <div class="nav-actions">
+                <button id="darkModeToggle" class="icon-btn" title="Toggle Light/Dark Mode">
+                    <i class="fas fa-sun"></i>
+                </button>
+                <button id="mobileMenuBtn" class="icon-btn mobile-only" title="Menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobileMenu" class="mobile-menu">
+        <div class="mobile-menu-header">
+            <span><i class="fas fa-dumbbell"></i> Menu</span>
+            <button id="closeMobileMenu" class="icon-btn"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="mobile-menu-links">
+            <a href="#home" class="mobile-link"><i class="fas fa-home"></i> Home</a>
+            <div class="mobile-section-title">Skills</div>
+            <a href="#skill-muscleup" class="mobile-link sub"><i class="fas fa-bolt"></i> Muscle Up</a>
+            <a href="#skill-handstand" class="mobile-link sub"><i class="fas fa-hand-fist"></i> Handstand</a>
+            <a href="#skill-frontlever" class="mobile-link sub"><i class="fas fa-minus"></i> Front Lever</a>
+            <a href="#skill-planche" class="mobile-link sub"><i class="fas fa-star"></i> Planche</a>
+            <a href="#skill-humanflag" class="mobile-link sub"><i class="fas fa-flag"></i> Human Flag</a>
+            <a href="#skill-backlever" class="mobile-link sub"><i class="fas fa-rotate-left"></i> Back Lever</a>
+            <a href="#skill-lsit" class="mobile-link sub"><i class="fas fa-l"></i> L-Sit</a>
+            <a href="#skill-pistolsquat" class="mobile-link sub"><i class="fas fa-person"></i> Pistol Squat</a>
+            <a href="#skill-hspu" class="mobile-link sub"><i class="fas fa-hand-point-down"></i> HSPU</a>
+            <a href="#skill-vsit" class="mobile-link sub"><i class="fas fa-v"></i> V-Sit</a>
+            <a href="#skill-oapu" class="mobile-link sub"><i class="fas fa-hand-back-fist"></i> One Arm Pull Up</a>
+            <a href="#skill-oapushup" class="mobile-link sub"><i class="fas fa-hand-point-right"></i> One Arm Push Up</a>
+            <a href="#skill-oahs" class="mobile-link sub"><i class="fas fa-hand"></i> One Arm Handstand</a>
+            <a href="#skill-dragonflag" class="mobile-link sub"><i class="fas fa-dragon"></i> Dragon Flag</a>
+            <div class="mobile-section-title">Tools</div>
+            <a href="#exercise-finder" class="mobile-link sub"><i class="fas fa-search"></i> Exercise Finder</a>
+            <a href="#bmi-calculator" class="mobile-link sub"><i class="fas fa-calculator"></i> BMI Calculator</a>
+            <a href="#diet-guide" class="mobile-link sub"><i class="fas fa-utensils"></i> Diet Guide</a>
+            <a href="#routine-generator" class="mobile-link sub"><i class="fas fa-calendar-alt"></i> Routine Generator</a>
+            <div class="mobile-section-title">More</div>
+            <a href="#warmup" class="mobile-link"><i class="fas fa-fire"></i> Warm-up Guide</a>
+            <a href="#workout-log" class="mobile-link"><i class="fas fa-clipboard-list"></i> Workout Log</a>
+            <a href="#faq" class="mobile-link"><i class="fas fa-question-circle"></i> FAQ</a>
+            <a href="#about" class="mobile-link"><i class="fas fa-user"></i> About Us</a>
+            <a href="#contact" class="mobile-link"><i class="fas fa-envelope"></i> Contact Us</a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main id="app"></main>
+
+    <!-- Footer -->
+    <footer id="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3><i class="fas fa-dumbbell"></i> CalisthenicsMastery</h3>
+                    <p>Your ultimate resource for bodyweight training, skill progressions, and achieving superhuman strength.</p>
+                    <div class="footer-socials">
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <a href="#home">Home</a>
+                    <a href="#warmup">Warm-up Guide</a>
+                    <a href="#workout-log">Workout Log</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Skills</h4>
+                    <a href="#skill-muscleup">Muscle Up</a>
+                    <a href="#skill-handstand">Handstand</a>
+                    <a href="#skill-planche">Planche</a>
+                    <a href="#skill-frontlever">Front Lever</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Tools</h4>
+                    <a href="#exercise-finder">Exercise Finder</a>
+                    <a href="#bmi-calculator">BMI Calculator</a>
+                    <a href="#routine-generator">Routine Generator</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Calisthenics & Bodyweight Mastery Hub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to top -->
+    <button id="scrollTopBtn" class="scroll-top-btn" title="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // ========== CALISTHENICS & BODYWEIGHT MASTERY HUB ==========
+        // Single Page Application with hash-based routing
+
+        (function() {
+        'use strict';
+
+        // ==================== DATA ====================
+
+        const SKILLS = {
+            'muscleup': {
+                name: 'Muscle Up', icon: 'fa-bolt', difficulty: 'advanced', diffClass: 'diff-advanced',
+                strength: 'Upper body explosive power, pulling and pushing strength',
+                description: 'The muscle-up is one of the most impressive calisthenics skills, combining a high pull-up with a dip transition. It requires explosive pulling strength, technique, and coordination to transition from below to above the bar.',
+                videoId: 'Xm4xjGx4CBQ',
+                progressions: [
+                    { title: 'High Pull-ups',  esc: 'Pull up explosively until the bar reaches your chest or lower. 3x5.' },
+                    { title: 'Straight Bar Dips', desc: 'Practice dipping on top of the bar to build the transition strength. 3x8.' },
+                    { title: 'Negative Muscle-ups', desc: 'Get on top and slowly lower through the transition. 3x3.' },
+                    { title: 'Band-Assisted Muscle-ups', desc: 'Use a band to assist through the transition phase. 3x3-5.' },
+                    { title: 'Kipping Muscle-up', desc: 'Use a slight swing to generate momentum for the transition. Sets of 1-3.' },
+                    { title: 'Strict Muscle-up', desc: 'Perform the movement with minimal or no kipping. The ultimate goal.' },
+                    { title: 'Weighted Muscle-up', desc: 'Add weight to increase difficulty. Advanced goal. 3x3.' }
+                ],
+                mistakes: [
+                    'Pulling straight up instead of in a curved path',
+                    'Not keeping the bar close to the body during transition',
+                    'Insufficient explosive pull height',
+                    'Chicken-winging one arm over at a time',
+                    'Not practicing the transition phase enough'
+                ],
+                exercises: ['High Pull-ups', 'Explosive Pull-ups', 'Straight Bar Dips', 'Korean Dips', 'Band Muscle-ups', 'Clap Pull-ups', 'Russian Dips', 'Weighted Pull-ups']
+            },
+            'handstand': {
+                name: 'Handstand', icon: 'fa-hand-fist', difficulty: 'intermediate', diffClass: 'diff-intermediate',
+                strength: 'Shoulders, wrists, core stability, balance',
+                description: 'The freestanding handstand is the cornerstone of balance skills in calisthenics. It develops incredible shoulder strength, body awareness, and proprioception. Regular practice unlocks handstand push-ups, planches, and more.',
+                videoId: 'KNC5lkoE2Fs',
+                progressions: [
+                    { title: 'Wrist Warm-up', desc: 'Always warm up wrists with circles, stretches, and flexion exercises.' },
+                    { title: 'Wall Plank', desc: 'Feet on wall, walk hands close to wall. Hold 30-60s. Build shoulder endurance.' },
+                    { title: 'Chest-to-Wall Handstand', desc: 'Face the wall, walk up until chest touches. Hold 20-30s. 5 sets.' },
+                    { title: 'Back-to-Wall Handstand', desc: 'Kick up with back to wall. Practice alignment. Hold 30-60s.' },
+                    { title: 'Toe Pulls from Wall', desc: 'Pull one toe off the wall at a time, finding balance. Practice 10 min.' },
+                    { title: 'Kick-up Practice', desc: 'Practice kicking up to freestanding. Use a spotter or soft surface.' },
+                    { title: 'Freestanding Handstand', desc: 'Hold for 10-60 seconds freestanding. Master finger balance control.' }
+                ],
+                mistakes: [
+                    'Banana back - not maintaining a straight line',
+                    'Looking at the ground instead of between hands',
+                    'Not pushing through the shoulders (shoulder elevation)',
+                    'Fingers not spread and gripping the floor',
+                    'Practicing only kick-ups without wall holds for endurance'
+                ],
+                exercises: ['Pike Push-ups', 'Wall Walks', 'Shoulder Taps', 'Handstand Shoulder Shrugs', 'Crow Pose', 'Handstand Walking', 'Pirouette Bail', 'Press to Handstand']
+            },
+            'frontlever': {
+                name: 'Front Lever', icon: 'fa-minus', difficulty: 'advanced', diffClass: 'diff-advanced',
+                strength: 'Lats, core, straight arm strength, scapular retraction',
+                description: 'The front lever is a breathtaking straight-arm strength hold where the body is held horizontal while hanging from a bar. It demands exceptional lat strength, core tension, and scapular control.',
+                videoId: 'srMJ0FvF-6s',
+                progressions: [
+                    { title: 'Active Hang', desc: 'Engage lats and depress shoulders while hanging. Build foundation. 3x20s.' },
+                    { title: 'Tuck Front Lever', desc: 'Knees tucked to chest, hold body horizontal. 5x10s.' },
+                    { title: 'Advanced Tuck', desc: 'Extend back while keeping knees tucked less tightly. 5x8s.' },
+                    { title: 'Single Leg Front Lever', desc: 'One leg extended, one tucked. Alternate legs. 5x6s each.' },
+                    { title: 'Straddle Front Lever', desc: 'Both legs extended but spread wide. 5x5s.' },
+                    { title: 'Half-Lay Front Lever', desc: 'Legs together but hips slightly bent. 5x4s.' },
+                    { title: 'Full Front Lever', desc: 'Body completely horizontal, legs together, perfectly straight. Hold 5-10s.' }
+                ],
+                mistakes: [
+                    'Hips sagging below shoulder level',
+                    'Not fully engaging lats and depressing scapulae',
+                    'Bending arms instead of keeping them straight',
+                    'Holding breath instead of breathing through the hold',
+                    'Skipping progressions and attempting full too early'
+                ],
+                exercises: ['Dragon Flags', 'Front Lever Raises', 'Ice Cream Makers', 'Tuck FL Pulls', 'Inverted Rows', 'Straight Arm Pulldowns', 'Body Rows', 'Hanging Leg Raises']
+            },
+            'planche': {
+                name: 'Planche', icon: 'fa-star', difficulty: 'elite', diffClass: 'diff-elite',
+                strength: 'Shoulders, wrists, core, straight arm pushing strength',
+                description: 'The planche is the holy grail of calisthenics - holding your entire body horizontal while supported only by your hands. It requires years of dedicated training and represents the pinnacle of bodyweight pushing strength.',
+                videoId: 'BeGUXwZmATQ',
+                progressions: [
+                    { title: 'Planche Lean', desc: 'In push-up position, lean forward past hands. Build wrist and shoulder strength. 5x15s.' },
+                    { title: 'Frog Stand / Crow Pose', desc: 'Balance on hands with knees on elbows. Build balance. 5x15s.' },
+                    { title: 'Tuck Planche', desc: 'Knees tucked to chest, lift off ground on parallettes. 5x8s.' },
+                    { title: 'Advanced Tuck Planche', desc: 'Flatten back while keeping knees tucked. 5x6s.' },
+                    { title: 'Straddle Planche', desc: 'Legs extended and spread wide. Major milestone. 5x4s.' },
+                    { title: 'Half-Lay Planche', desc: 'Legs together with slight hip bend. 5x3s.' },
+                    { title: 'Full Planche', desc: 'Body perfectly horizontal, legs together. The ultimate achievement. Hold 3-5s.' }
+                ],
+                mistakes: [
+                    'Not leaning forward enough over the hands',
+                    'Letting hips sag instead of maintaining posterior pelvic tilt',
+                    'Bent arms - must maintain straight arm strength',
+                    'Neglecting wrist conditioning and warm-up',
+                    'Training too frequently without adequate recovery'
+                ],
+                exercises: ['Planche Leans', 'Pseudo Planche Push-ups', 'Tuck Planche Push-ups', 'Band-Assisted Planche', 'Maltese Leans', 'Planche Press', 'Ring Support Hold', 'Straddle Press']
+            },
+            'humanflag': {
+                name: 'Human Flag', icon: 'fa-flag', difficulty: 'advanced', diffClass: 'diff-advanced',
+                strength: 'Obliques, shoulders, lats, grip strength',
+                description: 'The human flag is one of the most visually stunning calisthenics skills. Holding your body horizontally from a vertical pole requires tremendous lateral core strength, shoulder stability, and determination.',
+                videoId: 'TF9XhvYh_m8',
+                progressions: [
+                    { title: 'Vertical Flag (Pole Handstand)', desc: 'Hold yourself vertically on the pole. Build grip and pressing base. 3x10s.' },
+                    { title: 'Tuck Human Flag', desc: 'Knees tucked to chest while attempting horizontal hold. 5x5s.' },
+                    { title: 'Single Leg Flag', desc: 'One leg extended, one tucked. Build oblique strength. 5x5s.' },
+                    { title: 'Straddle Human Flag', desc: 'Both legs spread for reduced lever. 5x3-5s.' },
+                    { title: 'Negative Flag Lowers', desc: 'Start at top, slowly lower to horizontal. 3x3.' },
+                    { title: 'Full Human Flag', desc: 'Complete horizontal hold with legs together. Hold 3-8s.' }
+                ],
+                mistakes: [
+                    'Bottom arm not fully pressing (should be straight and pushing)',
+                    'Top arm not pulling enough',
+                    'Allowing body to rotate forward or backward',
+                    'Not engaging obliques and core fully',
+                    'Using a pole that is too slippery or thick'
+                ],
+                exercises: ['Side Planks', 'Dragon Flags', 'Windshield Wipers', 'Press to Flag Negatives', 'Hanging Side Crunches', 'One-Arm Hangs', 'Vertical Pole Holds', 'Cable Side Bends']
+            },
+            'backlever': {
+                name: 'Back Lever', icon: 'fa-rotate-left', difficulty: 'intermediate', diffClass: 'diff-intermediate',
+                strength: 'Bicep tendons, shoulders, core, straight arm strength',
+                description: 'The back lever is a fundamental straight-arm hold where you hang upside down and extend your body horizontally behind the bar. It builds crucial bicep tendon conditioning and is a prerequisite for many advanced skills.',
+                videoId: 'kYoJnMY4XM0',
+                progressions: [
+                    { title: 'German Hang', desc: 'Hang inverted with hands behind, stretch shoulders. Build flexibility. 3x15s.' },
+                    { title: 'Skin the Cat', desc: 'Rotate through full range forward and back. Condition shoulders. 3x5.' },
+                    { title: 'Tuck Back Lever', desc: 'Knees tucked, hold horizontal behind bar. 5x10s.' },
+                    { title: 'Advanced Tuck', desc: 'Open hip angle while keeping knees bent. 5x8s.' },
+                    { title: 'Single Leg Back Lever', desc: 'One leg extended, one tucked. 5x6s per side.' },
+                    { title: 'Straddle Back Lever', desc: 'Both legs extended and spread. 5x5s.' },
+                    { title: 'Full Back Lever', desc: 'Body straight and horizontal behind bar. Hold 5-10s.' }
+                ],
+                mistakes: [
+                    'Rushing into full position without tendon conditioning',
+                    'Not keeping arms straight throughout the hold',
+                    'Allowing the body to arch instead of staying straight',
+                    'Insufficient warm-up of bicep tendons',
+                    'Not using false/overhand grip properly'
+                ],
+                exercises: ['Skin the Cats', 'German Hangs', 'Inverted Hangs', 'BL Pulls', 'Ring BL Holds', 'Straight Arm Band Pullovers', 'Bicep Curls', 'Reverse Planks']
+            },
+            'lsit': {
+                name: 'L-Sit', icon: 'fa-l', difficulty: 'beginner', diffClass: 'diff-beginner',
+                strength: 'Core, hip flexors, triceps, compression strength',
+                description: 'The L-sit is a fundamental hold that develops incredible core and hip flexor strength. Performed on the floor or parallettes, it is a building block for V-sit, manna, and press to handstand progressions.',
+                videoId: 'RkLUSpe1Ilk',
+                progressions: [
+                    { title: 'Seated Leg Raises', desc: 'Sit on floor, hands beside hips, lift legs. Build hip flexor strength. 3x10.' },
+                    { title: 'Foot-Supported L-sit', desc: 'On parallettes, feet on ground, lift hips. 3x20s.' },
+                    { title: 'One Leg L-sit', desc: 'Lift one leg at a time while supporting weight. 3x10s each side.' },
+                    { title: 'Tuck L-sit', desc: 'Both knees tucked, lift off ground. 5x10s.' },
+                    { title: 'Advanced Tuck L-sit', desc: 'Gradually extend legs while in tuck. 5x8s.' },
+                    { title: 'Full L-sit', desc: 'Legs fully extended parallel to ground. Hold 10-30s. 5 sets.' },
+                    { title: 'V-Sit', desc: 'Lift legs above horizontal. Advanced progression. 5x5s.' }
+                ],
+                mistakes: [
+                    'Rounding the lower back instead of keeping chest proud',
+                    'Not pushing through the hands/shoulders (scapular depression)',
+                    'Bending knees in the full L-sit',
+                    'Neglecting hip flexor conditioning',
+                    'Not pointing toes (reduces aesthetic and engagement)'
+                ],
+                exercises: ['Hanging Knee Raises', 'Compression Work', 'Parallel Bar Support', 'Pike Compression', 'Seated Straddle Lifts', 'Hollow Body Holds', 'Dragon Flags', 'V-ups']
+            },
+            'pistolsquat': {
+                name: 'Pistol Squat', icon: 'fa-person', difficulty: 'intermediate', diffClass: 'diff-intermediate',
+                strength: 'Quads, glutes, ankle mobility, balance',
+                description: 'The pistol squat is the king of single-leg bodyweight exercises. It builds impressive leg strength, balance, and mobility while requiring no equipment. It is a true test of lower body functional strength.',
+                videoId: 'qDcniqddTeE',
+                progressions: [
+                    { title: 'Deep Bodyweight Squats', desc: 'Full range of motion squats. Build base strength and mobility. 3x15.' },
+                    { title: 'Assisted Pistol Squat', desc: 'Hold a pole or doorframe for balance assist. 3x5 each leg.' },
+                    { title: 'Box Pistol Squat', desc: 'Squat down to a box or bench on one leg. Lower box height progressively. 3x5.' },
+                    { title: 'Negative Pistol Squat', desc: 'Lower slowly on one leg, use both legs to stand. 3x3 each.' },
+                    { title: 'Band-Assisted Pistol', desc: 'Use a band attached above for assistance. 3x5 each leg.' },
+                    { title: 'Full Pistol Squat', desc: 'Complete full ROM pistol squat. 3x5 each leg.' },
+                    { title: 'Weighted Pistol Squat', desc: 'Hold a weight for added difficulty. 3x5 each leg.' }
+                ],
+                mistakes: [
+                    'Heel lifting off the ground (ankle mobility issue)',
+                    'Knee caving inward instead of tracking over toes',
+                    'Rounding the back excessively at the bottom',
+                    'Not extending the non-working leg straight enough',
+                    'Rushing the movement instead of controlling the descent'
+                ],
+                exercises: ['Bulgarian Split Squats', 'Shrimp Squats', 'Step-ups', 'Calf Raises', 'Single Leg RDLs', 'Ankle Mobility Drills', 'Goblet Squats', 'Jump Squats']
+            },
+            'hspu': {
+                name: 'Handstand Push-up', icon: 'fa-hand-point-down', difficulty: 'advanced', diffClass: 'diff-advanced',
+                strength: 'Shoulders, triceps, upper chest, core stability',
+                description: 'The handstand push-up is the ultimate pressing exercise in calisthenics. Pressing your entire bodyweight overhead while inverted builds incredible shoulder strength and is a core skill for any serious calisthenics practitioner.',
+                videoId: 'tQhrk6WMcKw',
+                progressions: [
+                    { title: 'Pike Push-ups', desc: 'In pike position, perform push-ups. Elevate feet for more difficulty. 3x10.' },
+                    { title: 'Elevated Pike Push-ups', desc: 'Feet on box or bench, pike push-ups. 3x8.' },
+                    { title: 'Wall Handstand Hold', desc: 'Build endurance in the inverted position. Hold 30-60s. 5 sets.' },
+                    { title: 'Wall HSPU Negatives', desc: 'From top, lower yourself slowly (5s) with wall support. 3x3.' },
+                    { title: 'Partial Wall HSPU', desc: 'Perform partial range HSPUs against wall. 3x5.' },
+                    { title: 'Full Wall HSPU', desc: 'Full range of motion with head touching ground. 3x5.' },
+                    { title: 'Freestanding HSPU', desc: 'Perform without wall support. The ultimate goal. Sets of 1-5.' }
+                ],
+                mistakes: [
+                    'Flaring elbows out too wide (should be roughly 45 degrees)',
+                    'Not going through full range of motion',
+                    'Arching the back instead of maintaining hollow body',
+                    'Not building sufficient handstand hold time first',
+                    'Rushing to freestanding without mastering wall version'
+                ],
+                exercises: ['Pike Push-ups', 'Decline Push-ups', 'Dumbbell Shoulder Press', 'Wall Walks', 'Handstand Shoulder Taps', 'Deficit HSPU', 'Ring HSPU', '90-Degree Push-ups']
+            },
+            'vsit': {
+                name: 'V-Sit', icon: 'fa-v', difficulty: 'advanced', diffClass: 'diff-advanced',
+                strength: 'Core, hip flexors, triceps, active flexibility',
+                description: 'The V-Sit is an advanced progression of the L-Sit where the legs are raised significantly above the horizontal plane, requiring extreme core compression and tricep strength.',
+                videoId: 'g52N26I1Xh4',
+                progressions: [
+                    { title: 'L-Sit', desc: 'Master the basic L-sit holding for 30+ seconds. 5 sets.' },
+                    { title: 'Pike Stretches', desc: 'Improve hamstring and lower back flexibility to allow compression.' },
+                    { title: 'Advanced L-Sit', desc: 'Lean back slightly and lift legs above horizontal. 5x10s.' },
+                    { title: 'Tuck V-Sit', desc: 'Tuck knees to chest and lean back, extending arms. 5x10s.' },
+                    { title: 'Straddle V-Sit', desc: 'Spread legs wide to reduce leverage while raising them high. 5x8s.' },
+                    { title: 'Full V-Sit', desc: 'Legs together, pointing straight up in a tight V shape. Hold 5-10s.' }
+                ],
+                mistakes: [
+                    'Bending the knees to fake flexibility',
+                    'Rounding the upper back excessively',
+                    'Not depressing the scapula (shrugging shoulders)',
+                    'Insufficient hamstring flexibility'
+                ],
+                exercises: ['L-Sit', 'Pike Compression Lifts', 'Tricep Dips', 'Hollow Body Holds', 'Hanging Leg Raises']
+            },
+            'oapu': {
+                name: 'One Arm Pull Up', icon: 'fa-hand-back-fist', difficulty: 'elite', diffClass: 'diff-elite',
+                strength: 'Lats, biceps, forearms, core anti-rotation',
+                description: 'The ultimate test of vertical pulling strength. Pulling your entire bodyweight with a single arm requires monumental back and bicep power along with extreme tendon conditioning.',
+                videoId: 'qC_kH8r0H20',
+                progressions: [
+                    { title: 'Weighted Pull-ups', desc: 'Build basic bilateral pulling strength (+50-70% bodyweight).' },
+                    { title: 'Archer Pull-ups', desc: 'Pull mostly with one arm, using the other for light support. 3x5 per arm.' },
+                    { title: 'Mantle Chin-ups', desc: 'Hold the bar with one hand, and the forearm with the other. 3x5 per arm.' },
+                    { title: 'OAPU Negatives', desc: 'Jump to the top with one arm and slowly lower over 5-10 seconds. 3x3 per arm.' },
+                    { title: 'Band-Assisted OAPU', desc: 'Use a resistance band on the pulling arm or foot. 3x3-5 per arm.' },
+                    { title: 'Full One Arm Pull Up', desc: 'From a dead hang, pull chin over the bar with one arm.' }
+                ],
+                mistakes: [
+                    'Rushing progressions and causing elbow tendonitis',
+                    'Dropping too fast during negative reps',
+                    'Not engaging the core to stop body rotation',
+                    'Kipping or using momentum'
+                ],
+                exercises: ['Weighted Pull-ups', 'Archer Pull-ups', 'French Contrast Pull-ups', 'Bicep Curls', 'One Arm Hangs']
+            },
+            'oapushup': {
+                name: 'One Arm Push Up', icon: 'fa-hand-point-right', difficulty: 'advanced', diffClass: 'diff-advanced',
+                strength: 'Chest, front delts, triceps, core anti-rotation',
+                description: 'A unilateral pushing exercise that builds tremendous pushing strength and core stability. It challenges the pressing muscles while heavily taxing the obliques to prevent rotation.',
+                videoId: '8M_A7R3Osv8',
+                progressions: [
+                    { title: 'Diamond Push-ups', desc: 'Master close-grip push-ups for tricep and inner chest strength.' },
+                    { title: 'Archer Push-ups', desc: 'Lower to one side keeping the other arm straight. 3x8 per arm.' },
+                    { title: 'Incline One Arm Push-up', desc: 'Perform the movement with hand elevated on a bench or wall. 3x5 per arm.' },
+                    { title: 'Straddle One Arm Push-up', desc: 'Feet wide apart for balance, perform full rep. 3x5 per arm.' },
+                    { title: 'Strict One Arm Push-up', desc: 'Feet closer together, minimal torso twisting. The ultimate goal.' }
+                ],
+                mistakes: [
+                    'Twisting the torso excessively to compensate for weakness',
+                    'Sagging the hips (poor core engagement)',
+                    'Not going through full range of motion',
+                    'Flaring the elbow out too far'
+                ],
+                exercises: ['Archer Push-ups', 'Weighted Push-ups', 'Plank Shoulder Taps', 'Pseudo Planche Push-ups']
+            },
+            'oahs': {
+                name: 'One Arm Handstand', icon: 'fa-hand', difficulty: 'elite', diffClass: 'diff-elite',
+                strength: 'Shoulders, wrists, obliques, extreme balance',
+                description: 'A circus-level balancing act requiring perfectly stacked joints, incredible shoulder strength, and thousands of hours of balance practice and weight shifting.',
+                videoId: '5eA_rJ9nEEM',
+                progressions: [
+                    { title: 'Freestanding Handstand', desc: 'Master a perfect, straight 60-second two-arm handstand.' },
+                    { title: 'Weight Shifting', desc: 'In handstand, shift weight side to side without lifting hands. 5x10 shifts.' },
+                    { title: 'Fingertip Support', desc: 'Shift weight to one arm, come up to fingertips on the other. 5x10s holds.' },
+                    { title: 'Straddle OAHS', desc: 'Legs wide for lower center of gravity, balance on one hand. Hold 3-5s.' },
+                    { title: 'Full Straight OAHS', desc: 'Legs together, perfect one-arm balance. Hold 5+ seconds.' }
+                ],
+                mistakes: [
+                    'Bending the elbow of the supporting arm',
+                    'Not shifting the hips completely over the supporting hand before lifting',
+                    'Lacking basic two-arm handstand endurance',
+                    'Looking in the wrong place (should look at the supporting hand)'
+                ],
+                exercises: ['Handstand Blocks', 'Wall Weight Shifts', 'Human Flag Holds', 'Handstand Push-ups']
+            },
+            'dragonflag': {
+                name: 'Dragon Flag', icon: 'fa-dragon', difficulty: 'intermediate', diffClass: 'diff-intermediate',
+                strength: 'Core (abs, obliques), lats, hip flexors',
+                description: 'Popularized by Bruce Lee, the dragon flag is a legendary core exercise that forces you to lift your entire body as a rigid plank using only your upper back/shoulders as an anchor.',
+                videoId: 'njlxTB3E3fI',
+                progressions: [
+                    { title: 'Lying Leg Raises', desc: 'Build basic lower ab strength. 3x15.' },
+                    { title: 'Tuck Dragon Flag', desc: 'Knees tucked to chest, roll up onto upper back and hold. 3x10s.' },
+                    { title: 'One Leg Dragon Flag', desc: 'One leg extended, one tucked. Alternate legs. 3x5 reps.' },
+                    { title: 'Dragon Flag Negatives', desc: 'Kick up to straight position, slowly lower down over 5 seconds. 3x5 reps.' },
+                    { title: 'Full Dragon Flag', desc: 'Lift straight body up and down with control. 3x5 reps.' }
+                ],
+                mistakes: [
+                    'Arching the lower back instead of maintaining posterior pelvic tilt',
+                    'Bending at the hips (piking) instead of keeping a straight body',
+                    'Not gripping the anchor point tightly enough',
+                    'Resting completely at the bottom between reps'
+                ],
+                exercises: ['Hollow Body Holds', 'Front Lever Raises', 'Hanging Leg Raises', 'Ab Wheel Rollouts']
+            }
+        };
+
+        const WARMUP_STEPS = [
+            { name: 'Joint Circles', desc: 'Circle wrists, elbows, shoulders, hips, knees, and ankles. 10 circles each direction.', duration: '2 min', icon: 'fa-rotate' },
+            { name: 'Jumping Jacks', desc: 'Full body warm-up to raise heart rate and increase blood flow to muscles.', duration: '1 min', icon: 'fa-person-running' },
+            { name: 'Arm Circles', desc: 'Small to large circles, forward and backward. Warms up shoulders and rotator cuffs.', duration: '1 min', icon: 'fa-arrows-spin' },
+            { name: 'Cat-Cow Stretches', desc: 'On all fours, alternate between arching and rounding the spine. Mobilize thoracic spine.', duration: '1 min', icon: 'fa-cat' },
+            { name: 'Wrist Warm-up', desc: 'Wrist circles, finger stretches, wrist push-up position rocks, and prayer stretches.', duration: '2 min', icon: 'fa-hand' },
+            { name: 'Leg Swings', desc: 'Forward/back and side-to-side leg swings. Hold a wall for balance. 15 each direction.', duration: '1 min', icon: 'fa-shoe-prints' },
+            { name: 'Deep Squat Hold', desc: 'Sit in a deep squat position, push knees out with elbows. Open hips and ankles.', duration: '1 min', icon: 'fa-child' },
+            { name: 'Inchworms', desc: 'Walk hands out to plank, walk feet to hands. Full body dynamic stretch.', duration: '1 min', icon: 'fa-worm' },
+            { name: 'Scapular Push-ups', desc: 'In plank, protract and retract shoulder blades. Activate serratus anterior.', duration: '1 min', icon: 'fa-arrows-left-right' },
+            { name: 'Band Pull-Aparts', desc: 'Use a resistance band to warm up rear delts and rotator cuff. Essential for pulling days.', duration: '1 min', icon: 'fa-expand' },
+            { name: 'Dead Hangs', desc: 'Hang from a bar for 20-30 seconds. Decompress spine and warm up grip.', duration: '30s', icon: 'fa-grip' },
+            { name: 'Skill-Specific Warm-up', desc: 'Practice easier versions of today\'s target skills at low intensity.', duration: '2-3 min', icon: 'fa-bullseye' }
+        ];
+
+        const FAQ_DATA = [
+            { q: 'How long does it take to learn a muscle-up?', a: 'For most people with a solid base of 10+ strict pull-ups, learning a muscle-up takes 3-6 months of dedicated practice. If you are starting from scratch, it could take 1-2 years. The key prerequisites are being able to do at least 10 strict pull-ups and 15 straight bar dips.' },
+            { q: 'Can I build muscle with calisthenics only?', a: 'Absolutely! Calisthenics can build significant muscle mass, especially for beginners and intermediates. The keys are progressive overload (harder variations), sufficient volume (enough sets and reps), proper nutrition (caloric surplus with adequate protein), and consistency. Many calisthenics athletes have impressive physiques built purely from bodyweight training.' },
+            { q: 'How often should I train calisthenics?', a: 'Most people benefit from 3-5 training sessions per week. Beginners should start with 3 full-body sessions with rest days between. Intermediates can train 4-5 days with a push/pull/legs or upper/lower split. Always include at least 1-2 rest days per week for recovery. Skill work like handstands can be practiced daily at low intensity.' },
+            { q: 'Do I need any equipment for calisthenics?', a: 'At minimum, you need a pull-up bar. Recommended additional equipment includes: gymnastics rings (extremely versatile), parallettes (for L-sits, planche work), resistance bands (for assisted exercises and warm-up), and a dip station. A good park with bars is perfect for training.' },
+            { q: 'What should I eat for calisthenics training?', a: 'Focus on adequate protein intake (1.6-2.2g per kg of bodyweight), complex carbohydrates for energy, healthy fats, and plenty of fruits and vegetables. For muscle building, eat in a slight caloric surplus. For fat loss, maintain a moderate caloric deficit while keeping protein high. Stay well-hydrated and consider timing carbs around your workouts.' },
+            { q: 'Is calisthenics better than weight training?', a: 'Neither is inherently better - they are different tools. Calisthenics excels at building relative strength, body control, and functional movement patterns. Weight training is more efficient for isolating muscles and progressive loading. Many athletes combine both. Choose based on your goals, preferences, and available equipment.' },
+            { q: 'How do I prevent injuries in calisthenics?', a: 'Always warm up thoroughly (10-15 minutes minimum). Progress gradually through skill progressions - never skip steps. Condition your tendons (they adapt slower than muscles). Listen to your body and rest when needed. Focus on proper form over reps. Include mobility work and prehabilitation exercises. Deload every 4-6 weeks.' },
+            { q: 'What is the best beginner calisthenics routine?', a: 'A great beginner routine performed 3x per week: Push-ups 3x8-12, Rows 3x8-12, Squats 3x15, Dips (assisted) 3x6-10, Pull-ups (negatives or band) 3x5-8, Plank 3x30s, Lunges 3x10 each leg. Focus on mastering form before adding difficulty. Use our Routine Generator tool for customized plans!' },
+            { q: 'Can older adults do calisthenics?', a: 'Yes! Calisthenics is excellent for all ages. Start with regressions appropriate for your fitness level. Focus on mobility, basic strength, and balance. Push-ups against a wall, assisted squats, dead hangs, and walking are great starting points. Progress gradually and consult a healthcare provider before starting any new exercise program.' }
+        ];
+
+        const EXERCISE_DB = [
+            { name: 'Push-up', muscle: 'chest', equipment: 'bodyweight', gif: '0001', desc: 'Classic pushing exercise' },
+            { name: 'Diamond Push-up', muscle: 'triceps', equipment: 'bodyweight', gif: '0002', desc: 'Close hand push-up for triceps' },
+            { name: 'Wide Push-up', muscle: 'chest', equipment: 'bodyweight', gif: '0003', desc: 'Wide grip variation targets outer chest' },
+            { name: 'Archer Push-up', muscle: 'chest', equipment: 'bodyweight', gif: '0004', desc: 'Unilateral pushing progression' },
+            { name: 'Pull-up', muscle: 'back', equipment: 'pull-up bar', gif: '0005', desc: 'Fundamental pulling exercise' },
+            { name: 'Chin-up', muscle: 'biceps', equipment: 'pull-up bar', gif: '0006', desc: 'Supinated grip pull for biceps' },
+            { name: 'Inverted Row', muscle: 'back', equipment: 'bar/rings', gif: '0007', desc: 'Horizontal pulling exercise' },
+            { name: 'Dip', muscle: 'chest', equipment: 'parallel bars', gif: '0008', desc: 'Upper body pressing compound' },
+            { name: 'Pike Push-up', muscle: 'shoulders', equipment: 'bodyweight', gif: '0009', desc: 'Shoulder pressing progression' },
+            { name: 'Handstand Push-up', muscle: 'shoulders', equipment: 'wall', gif: '0010', desc: 'Inverted pressing exercise' },
+            { name: 'Bodyweight Squat', muscle: 'legs', equipment: 'bodyweight', gif: '0011', desc: 'Fundamental leg exercise' },
+            { name: 'Pistol Squat', muscle: 'legs', equipment: 'bodyweight', gif: '0012', desc: 'Single leg squat' },
+            { name: 'Bulgarian Split Squat', muscle: 'legs', equipment: 'bench', gif: '0013', desc: 'Rear foot elevated split squat' },
+            { name: 'Calf Raise', muscle: 'legs', equipment: 'bodyweight', gif: '0014', desc: 'Isolates calf muscles' },
+            { name: 'Plank', muscle: 'core', equipment: 'bodyweight', gif: '0015', desc: 'Isometric core stabilizer' },
+            { name: 'Hollow Body Hold', muscle: 'core', equipment: 'bodyweight', gif: '0016', desc: 'Gymnastics core foundation' },
+            { name: 'L-Sit', muscle: 'core', equipment: 'parallettes', gif: '0017', desc: 'Core and hip flexor hold' },
+            { name: 'Dragon Flag', muscle: 'core', equipment: 'bench', gif: '0018', desc: 'Advanced core exercise' },
+            { name: 'Hanging Leg Raise', muscle: 'core', equipment: 'pull-up bar', gif: '0019', desc: 'Hanging core exercise' },
+            { name: 'Muscle-up', muscle: 'back', equipment: 'pull-up bar', gif: '0020', desc: 'Pull-up to dip transition' },
+            { name: 'Skin the Cat', muscle: 'shoulders', equipment: 'rings', gif: '0021', desc: 'Shoulder mobility and strength' },
+            { name: 'Ring Dip', muscle: 'chest', equipment: 'rings', gif: '0022', desc: 'Unstable dip variation' },
+            { name: 'Ring Row', muscle: 'back', equipment: 'rings', gif: '0023', desc: 'Ring inverted row' },
+            { name: 'Jump Squat', muscle: 'legs', equipment: 'bodyweight', gif: '0024', desc: 'Plyometric squat' },
+            { name: 'Lunge', muscle: 'legs', equipment: 'bodyweight', gif: '0025', desc: 'Walking or stationary lunge' },
+            { name: 'Glute Bridge', muscle: 'legs', equipment: 'bodyweight', gif: '0026', desc: 'Glute activation exercise' },
+            { name: 'Superman Hold', muscle: 'back', equipment: 'bodyweight', gif: '0027', desc: 'Posterior chain strengthener' },
+            { name: 'Burpee', muscle: 'full body', equipment: 'bodyweight', gif: '0028', desc: 'Full body conditioning' },
+            { name: 'Mountain Climber', muscle: 'core', equipment: 'bodyweight', gif: '0029', desc: 'Dynamic core and cardio' },
+            { name: 'Pseudo Planche Push-up', muscle: 'shoulders', equipment: 'bodyweight', gif: '0030', desc: 'Planche progression push-up' },
+            { name: 'Tuck Front Lever', muscle: 'back', equipment: 'pull-up bar', gif: '0031', desc: 'Front lever progression' },
+            { name: 'Back Lever Hold', muscle: 'shoulders', equipment: 'rings', gif: '0032', desc: 'Back lever isometric' },
+            { name: 'Typewriter Pull-up', muscle: 'back', equipment: 'pull-up bar', gif: '0033', desc: 'Side to side pull-up' },
+            { name: 'Clapping Push-up', muscle: 'chest', equipment: 'bodyweight', gif: '0034', desc: 'Explosive pushing' },
+            { name: 'Hindu Push-up', muscle: 'shoulders', equipment: 'bodyweight', gif: '0035', desc: 'Flowing push-up variation' },
+            { name: 'Shrimp Squat', muscle: 'legs', equipment: 'bodyweight', gif: '0036', desc: 'Rear-foot grab squat' },
+            { name: 'Side Plank', muscle: 'core', equipment: 'bodyweight', gif: '0037', desc: 'Lateral core stabilizer' },
+            { name: 'Ab Wheel Rollout', muscle: 'core', equipment: 'ab wheel', gif: '0038', desc: 'Anti-extension core exercise' },
+            { name: 'Nordic Curl', muscle: 'legs', equipment: 'bodyweight', gif: '0039', desc: 'Eccentric hamstring exercise' },
+            { name: 'Windshield Wipers', muscle: 'core', equipment: 'pull-up bar', gif: '0040', desc: 'Rotational core strength' }
+        ];
+
+        const ROUTINES = {
+            beginner: {
+                title: 'Beginner Routine',
+                subtitle: '3 days per week - Full Body',
+                days: [
+                    { name: 'Day 1 - Full Body A', exercises: [
+                        { name: 'Wall Push-ups', sets: '3 x 12' },
+                        { name: 'Inverted Rows (high bar)', sets: '3 x 8' },
+                        { name: 'Bodyweight Squats', sets: '3 x 15' },
+                        { name: 'Negative Pull-ups', sets: '3 x 5' },
+                        { name: 'Bench Dips', sets: '3 x 10' },
+                        { name: 'Plank Hold', sets: '3 x 20s' },
+                        { name: 'Glute Bridges', sets: '3 x 12' }
+                    ]},
+                    { name: 'Day 2 - Rest', exercises: [{ name: 'Active Recovery: Light walk, stretching, mobility work', sets: '20-30 min' }] },
+                    { name: 'Day 3 - Full Body B', exercises: [
+                        { name: 'Incline Push-ups', sets: '3 x 10' },
+                        { name: 'Band-Assisted Pull-ups', sets: '3 x 5' },
+                        { name: 'Lunges', sets: '3 x 10 each' },
+                        { name: 'Knee Push-ups', sets: '3 x 12' },
+                        { name: 'Dead Hang', sets: '3 x 20s' },
+                        { name: 'Superman Hold', sets: '3 x 15s' },
+                        { name: 'Calf Raises', sets: '3 x 15' }
+                    ]},
+                    { name: 'Day 4 - Rest', exercises: [{ name: 'Active Recovery: Yoga, foam rolling, walking', sets: '20-30 min' }] },
+                    { name: 'Day 5 - Full Body C', exercises: [
+                        { name: 'Push-ups', sets: '3 x max' },
+                        { name: 'Inverted Rows', sets: '3 x 10' },
+                        { name: 'Squats', sets: '3 x 20' },
+                        { name: 'Negative Dips', sets: '3 x 5' },
+                        { name: 'Hollow Body Hold', sets: '3 x 15s' },
+                        { name: 'Wall Handstand', sets: '3 x 15s' },
+                        { name: 'Leg Raises', sets: '3 x 10' }
+                    ]}
+                ]
+            },
+            intermediate: {
+                title: 'Intermediate Routine',
+                subtitle: '4 days per week - Upper/Lower Split',
+                days: [
+                    { name: 'Day 1 - Upper Push', exercises: [
+                        { name: 'Push-ups', sets: '4 x 15' },
+                        { name: 'Dips', sets: '4 x 10' },
+                        { name: 'Pike Push-ups', sets: '3 x 10' },
+                        { name: 'Diamond Push-ups', sets: '3 x 12' },
+                        { name: 'Pseudo Planche Push-ups', sets: '3 x 8' },
+                        { name: 'Planche Lean', sets: '3 x 15s' },
+                        { name: 'L-Sit Hold', sets: '4 x 10s' }
+                    ]},
+                    { name: 'Day 2 - Lower Body', exercises: [
+                        { name: 'Pistol Squat (assisted)', sets: '4 x 5 each' },
+                        { name: 'Bulgarian Split Squats', sets: '3 x 10 each' },
+                        { name: 'Nordic Curl Negatives', sets: '3 x 5' },
+                        { name: 'Calf Raises', sets: '4 x 20' },
+                        { name: 'Single Leg Glute Bridge', sets: '3 x 12 each' },
+                        { name: 'Jump Squats', sets: '3 x 10' },
+                        { name: 'Wall Sit', sets: '3 x 30s' }
+                    ]},
+                    { name: 'Day 3 - Rest / Skill Work', exercises: [
+                        { name: 'Handstand Practice', sets: '15 min' },
+                        { name: 'Mobility / Flexibility', sets: '15 min' }
+                    ]},
+                    { name: 'Day 4 - Upper Pull', exercises: [
+                        { name: 'Pull-ups', sets: '4 x 8' },
+                        { name: 'Chin-ups', sets: '3 x 10' },
+                        { name: 'Archer Rows', sets: '3 x 8 each' },
+                        { name: 'Tuck Front Lever', sets: '5 x 8s' },
+                        { name: 'Tuck Back Lever', sets: '5 x 8s' },
+                        { name: 'Hanging Leg Raises', sets: '3 x 12' },
+                        { name: 'Face Pulls (band)', sets: '3 x 15' }
+                    ]},
+                    { name: 'Day 5 - Full Body / Skills', exercises: [
+                        { name: 'Muscle-up Progressions', sets: '5 x 3' },
+                        { name: 'Handstand Hold', sets: '5 x 20s' },
+                        { name: 'Ring Dips', sets: '3 x 8' },
+                        { name: 'Dragon Flag Negatives', sets: '3 x 5' },
+                        { name: 'Skin the Cat', sets: '3 x 5' },
+                        { name: 'Shrimp Squats', sets: '3 x 6 each' }
+                    ]}
+                ]
+            },
+            advanced: {
+                title: 'Advanced Routine',
+                subtitle: '5-6 days per week - Push/Pull/Legs + Skills',
+                days: [
+                    { name: 'Day 1 - Heavy Push + Planche', exercises: [
+                        { name: 'Planche Progressions', sets: '6 x 6-8s' },
+                        { name: 'HSPU (wall)', sets: '4 x 6' },
+                        { name: 'Weighted Dips', sets: '4 x 8' },
+                        { name: 'Archer Push-ups', sets: '3 x 8 each' },
+                        { name: 'Tuck Planche Push-ups', sets: '3 x 5' },
+                        { name: 'Ring Push-ups', sets: '3 x 12' },
+                        { name: 'Maltese Lean', sets: '3 x 10s' }
+                    ]},
+                    { name: 'Day 2 - Heavy Pull + Front Lever', exercises: [
+                        { name: 'Front Lever Progressions', sets: '6 x 6-8s' },
+                        { name: 'Weighted Pull-ups', sets: '4 x 6' },
+                        { name: 'Muscle-ups', sets: '4 x 3' },
+                        { name: 'Typewriter Pull-ups', sets: '3 x 5 each' },
+                        { name: 'Ice Cream Makers', sets: '3 x 6' },
+                        { name: 'One-Arm Row Progression', sets: '3 x 6 each' },
+                        { name: 'Windshield Wipers', sets: '3 x 8' }
+                    ]},
+                    { name: 'Day 3 - Legs + Core', exercises: [
+                        { name: 'Pistol Squats', sets: '4 x 6 each' },
+                        { name: 'Nordic Curls', sets: '4 x 6' },
+                        { name: 'Shrimp Squats', sets: '3 x 8 each' },
+                        { name: 'Weighted Step-ups', sets: '3 x 10 each' },
+                        { name: 'Dragon Flags', sets: '3 x 8' },
+                        { name: 'L-Sit to V-Sit', sets: '4 x 8s' },
+                        { name: 'Ab Wheel Rollout', sets: '3 x 10' }
+                    ]},
+                    { name: 'Day 4 - Skill Day', exercises: [
+                        { name: 'Freestanding Handstand', sets: '20 min' },
+                        { name: 'Human Flag Practice', sets: '10 x attempts' },
+                        { name: 'Back Lever Holds', sets: '5 x 8s' },
+                        { name: 'Mobility & Flexibility', sets: '20 min' }
+                    ]},
+                    { name: 'Day 5 - Volume Push/Pull', exercises: [
+                        { name: 'Ring Muscle-ups', sets: '5 x 2' },
+                        { name: 'Ring Dips', sets: '4 x 10' },
+                        { name: 'Freestanding HSPU', sets: '5 x 2' },
+                        { name: 'Front Lever Rows', sets: '4 x 5' },
+                        { name: 'Planche Push-ups', sets: '4 x 3' },
+                        { name: 'Archer Pull-ups', sets: '3 x 6 each' },
+                        { name: 'Ring Flyes', sets: '3 x 8' }
+                    ]},
+                    { name: 'Day 6 - Active Recovery', exercises: [
+                        { name: 'Light Cardio', sets: '20 min' },
+                        { name: 'Full Body Stretching', sets: '20 min' },
+                        { name: 'Foam Rolling', sets: '10 min' }
+                    ]}
+                ]
+            }
+        };
+
+        const MEALS = {
+            bulk: {
+                title: 'Muscle Building (Bulk)',
+                calories: '2800-3200',
+                protein: '160-180g',
+                meals: [
+                    { time: 'Breakfast (7 AM)', items: ['4 eggs scrambled', 'Oatmeal with banana & honey', 'Glass of whole milk', '~650 cal | 35g protein'] },
+                    { time: 'Snack (10 AM)', items: ['Greek yogurt with granola', 'Handful of almonds', '~350 cal | 25g protein'] },
+                    { time: 'Lunch (1 PM)', items: ['Grilled chicken breast (200g)', 'Brown rice (1.5 cups)', 'Mixed vegetables', 'Olive oil drizzle', '~700 cal | 45g protein'] },
+                    { time: 'Pre-Workout (4 PM)', items: ['Banana with peanut butter', 'Protein shake', '~400 cal | 30g protein'] },
+                    { time: 'Post-Workout (6 PM)', items: ['Protein shake with milk', 'Rice cakes with honey', '~350 cal | 35g protein'] },
+                    { time: 'Dinner (8 PM)', items: ['Salmon fillet (200g)', 'Sweet potato', 'Broccoli & asparagus', 'Avocado', '~650 cal | 40g protein'] }
+                ]
+            },
+            cut: {
+                title: 'Fat Loss (Cut)',
+                calories: '1800-2200',
+                protein: '170-200g',
+                meals: [
+                    { time: 'Breakfast (8 AM)', items: ['3 egg whites + 1 whole egg', 'Spinach & tomato omelette', 'Slice whole wheat toast', '~300 cal | 28g protein'] },
+                    { time: 'Snack (11 AM)', items: ['Protein shake with water', 'Apple', '~200 cal | 25g protein'] },
+                    { time: 'Lunch (1 PM)', items: ['Grilled chicken breast (200g)', 'Large mixed salad', 'Light vinaigrette', 'Quinoa (0.5 cup)', '~450 cal | 45g protein'] },
+                    { time: 'Snack (4 PM)', items: ['Greek yogurt (low fat)', 'Berries', '~150 cal | 20g protein'] },
+                    { time: 'Dinner (7 PM)', items: ['Lean turkey or fish (200g)', 'Steamed vegetables', 'Small portion brown rice', '~400 cal | 42g protein'] },
+                    { time: 'Evening (9 PM)', items: ['Casein protein or cottage cheese', '~150 cal | 25g protein'] }
+                ]
+            },
+            maintain: {
+                title: 'Maintenance',
+                calories: '2300-2600',
+                protein: '150-170g',
+                meals: [
+                    { time: 'Breakfast (7:30 AM)', items: ['3 eggs any style', 'Whole wheat toast (2 slices)', 'Avocado half', 'Orange juice', '~550 cal | 30g protein'] },
+                    { time: 'Snack (10:30 AM)', items: ['Mixed nuts & dried fruit', 'Protein bar', '~300 cal | 20g protein'] },
+                    { time: 'Lunch (1 PM)', items: ['Chicken or beef stir-fry', 'Brown rice or noodles', 'Mixed vegetables', '~600 cal | 40g protein'] },
+                    { time: 'Pre-Workout (4 PM)', items: ['Banana', 'Rice cakes', 'Coffee', '~200 cal | 5g protein'] },
+                    { time: 'Dinner (7 PM)', items: ['Grilled fish or chicken (180g)', 'Roasted potatoes', 'Salad with olive oil', '~550 cal | 40g protein'] },
+                    { time: 'Evening Snack', items: ['Greek yogurt', 'Honey & granola', '~250 cal | 20g protein'] }
+                ]
+            },
+            veg_bulk: {
+                title: 'Vegetarian Muscle Building (Bulk)',
+                calories: '2800-3200',
+                protein: '140-160g',
+                meals: [
+                    { time: 'Breakfast (7 AM)', items: ['Tofu scramble (200g)', 'Oatmeal with banana & peanut butter', 'Soy milk', '~650 cal | 35g protein'] },
+                    { time: 'Snack (10 AM)', items: ['Greek yogurt with granola', 'Handful of walnuts', '~350 cal | 25g protein'] },
+                    { time: 'Lunch (1 PM)', items: ['Lentil & chickpea curry', 'Quinoa (1.5 cups)', 'Mixed vegetables', 'Olive oil drizzle', '~700 cal | 40g protein'] },
+                    { time: 'Pre-Workout (4 PM)', items: ['Banana with almond butter', 'Plant-based protein shake', '~400 cal | 30g protein'] },
+                    { time: 'Post-Workout (6 PM)', items: ['Whey or Plant protein shake', 'Rice cakes with honey', '~350 cal | 30g protein'] },
+                    { time: 'Dinner (8 PM)', items: ['Tempeh stir-fry (150g)', 'Brown rice', 'Broccoli & asparagus', 'Avocado', '~650 cal | 35g protein'] }
+                ]
+            },
+            veg_cut: {
+                title: 'Vegetarian Fat Loss (Cut)',
+                calories: '1800-2200',
+                protein: '150-170g',
+                meals: [
+                    { time: 'Breakfast (8 AM)', items: ['Egg whites or Tofu scramble', 'Spinach & tomato', 'Slice whole wheat toast', '~300 cal | 25g protein'] },
+                    { time: 'Snack (11 AM)', items: ['Plant-based protein shake with water', 'Apple', '~200 cal | 25g protein'] },
+                    { time: 'Lunch (1 PM)', items: ['Large mixed salad with Edamame', 'Light vinaigrette', 'Quinoa (0.5 cup)', '~450 cal | 30g protein'] },
+                    { time: 'Snack (4 PM)', items: ['Low-fat Greek yogurt', 'Berries', '~150 cal | 20g protein'] },
+                    { time: 'Dinner (7 PM)', items: ['Grilled seitan or tempeh (150g)', 'Steamed vegetables', 'Small portion brown rice', '~400 cal | 35g protein'] },
+                    { time: 'Evening (9 PM)', items: ['Cottage cheese or vegan casein alternative', '~150 cal | 20g protein'] }
+                ]
+            },
+            veg_maintain: {
+                title: 'Vegetarian Maintenance',
+                calories: '2300-2600',
+                protein: '130-150g',
+                meals: [
+                    { time: 'Breakfast (7:30 AM)', items: ['3 eggs or large Tofu scramble', 'Whole wheat toast (2 slices)', 'Avocado half', 'Orange juice', '~550 cal | 25g protein'] },
+                    { time: 'Snack (10:30 AM)', items: ['Mixed nuts & dried fruit', 'Protein bar', '~300 cal | 20g protein'] },
+                    { time: 'Lunch (1 PM)', items: ['Black bean & corn burrito bowl', 'Brown rice', 'Mixed vegetables', '~600 cal | 30g protein'] },
+                    { time: 'Pre-Workout (4 PM)', items: ['Banana', 'Rice cakes', 'Coffee', '~200 cal | 5g protein'] },
+                    { time: 'Dinner (7 PM)', items: ['Lentil pasta with marinara', 'Side salad with olive oil', '~550 cal | 35g protein'] },
+                    { time: 'Evening Snack', items: ['Greek yogurt', 'Honey & granola', '~250 cal | 20g protein'] }
+                ]
+            }
+        };
+
+        // ==================== UTILITY FUNCTIONS ====================
+
+        function getWorkoutLog() {
+            return JSON.parse(localStorage.getItem('cm_workoutlog') || '[]');
+        }
+
+        function setWorkoutLog(data) {
+            localStorage.setItem('cm_workoutlog', JSON.stringify(data));
+        }
+
+        function showToast(msg) {
+            let container = document.querySelector('.toast-container');
+            if (!container) {
+                container = document.createElement('div');
+                container.className = 'toast-container';
+                document.body.appendChild(container);
+            }
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerHTML = '<i class="fas fa-check-circle" style="color:var(--accent);margin-right:8px"></i>' + msg;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        function formatDate(d) {
+            return new Date(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+        }
+
+        // ==================== ROUTER ====================
+
+        function getRoute() {
+            return window.location.hash.slice(1) || 'home';
+        }
+
+        function navigate(route) {
+            window.location.hash = route;
+        }
+
+        function handleRoute() {
+            const route = getRoute();
+            const app = document.getElementById('app');
+            app.style.animation = 'none';
+            void app.offsetHeight;
+            app.style.animation = 'fadeIn 0.3s ease';
+
+            // Update active nav
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+            document.querySelectorAll(`.nav-link[href="#${route}"]`).forEach(l => l.classList.add('active'));
+
+            // Close mobile menu
+            closeMobileMenu();
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // Route matching
+            if (route === 'home' || route === '') renderHome();
+            else if (route === 'about') renderAbout();
+            else if (route === 'contact') renderContact();
+            else if (route === 'faq') renderFAQ();
+            else if (route === 'warmup') renderWarmup();
+            else if (route === 'workout-log') renderWorkoutLog();
+            else if (route === 'exercise-finder') renderExerciseFinder();
+            else if (route === 'bmi-calculator') renderBMI();
+            else if (route === 'diet-guide') renderDiet();
+            else if (route === 'routine-generator') renderRoutine();
+            else if (route.startsWith('skill-')) renderSkill(route.replace('skill-', ''));
+            else renderHome();
+        }
+
+        // ==================== PAGE RENDERERS ====================
+
+        function renderHome() {
+            const app = document.getElementById('app');
+            const skillKeys = Object.keys(SKILLS);
+            const logCount = getWorkoutLog().length;
+
+            app.innerHTML = `
+            <!-- Hero -->
+            <section class="hero">
+                <div class="hero-content">
+                    <div class="hero-badge"><i class="fas fa-fire"></i> Master Bodyweight Training</div>
+                    <h1>Calisthenics &<br><span class="gradient-text">Bodyweight Mastery</span> Hub</h1>
+                    <p>Your complete guide to mastering bodyweight skills. From pull-ups to planches, track your workouts and build superhuman strength.</p>
+                    <div class="hero-buttons">
+                        <a href="#skill-lsit" class="btn btn-primary btn-lg"><i class="fas fa-rocket"></i> Start Training</a>
+                        <a href="#workout-log" class="btn btn-secondary btn-lg"><i class="fas fa-clipboard-list"></i> Workout Log</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Stats -->
+            <section class="section" style="padding-top:0">
+                <div class="container">
+                    <div class="stats-row animate-in" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+                        <div class="stat-card">
+                            <div class="stat-value">14</div>
+                            <div class="stat-label">Skill Tutorials</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">40+</div>
+                            <div class="stat-label">Exercises</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">${logCount}</div>
+                            <div class="stat-label">Workouts Logged</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Featured Skills -->
+            <section class="section">
+                <div class="container">
+                    <div class="section-header">
+                        <h2>Master These <span class="gradient-text">Skills</span></h2>
+                        <p>Progress through 14 fundamental calisthenics skills from beginner to elite level</p>
+                    </div>
+                    
+                    <div style="margin-bottom:32px; display:flex; gap:8px; justify-content:center; flex-wrap:wrap;" id="skillFilterPills">
+                        <button class="filter-pill active" onclick="filterSkills('all', this)">All Levels</button>
+                        <button class="filter-pill" onclick="filterSkills('beginner', this)">Beginner</button>
+                        <button class="filter-pill" onclick="filterSkills('intermediate', this)">Intermediate</button>
+                        <button class="filter-pill" onclick="filterSkills('advanced', this)">Advanced</button>
+                        <button class="filter-pill" onclick="filterSkills('elite', this)">Elite</button>
+                    </div>
+
+                    <div class="grid-3" id="skillsGrid">
+                        ${skillKeys.map((key, i) => {
+                            const s = SKILLS[key];
+                            return `
+                            <a href="#skill-${key}" class="card skill-card animate-in animate-delay-${(i%6)+1}" data-difficulty="${s.difficulty}" style="text-decoration:none;color:inherit">
+                                <div class="card-icon"><i class="fas ${s.icon}"></i></div>
+                                <span class="difficulty-badge ${s.diffClass}">${s.difficulty}</span>
+                                <h3>${s.name}</h3>
+                            </a>`;
+                        }).join('')}
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tools -->
+            <section class="section" style="background:var(--bg-secondary)">
+                <div class="container">
+                    <div class="section-header">
+                        <h2>Training <span class="gradient-text">Tools</span></h2>
+                        <p>Everything you need to optimize your calisthenics journey</p>
+                    </div>
+                    <div class="grid-3">
+                        <a href="#exercise-finder" class="card animate-in" style="text-decoration:none;color:inherit">
+                            <div class="card-icon"><i class="fas fa-search"></i></div>
+                            <h3>Exercise Finder</h3>
+                            <p>Search and filter 40+ bodyweight exercises by muscle group and equipment</p>
+                        </a>
+                        <a href="#bmi-calculator" class="card animate-in animate-delay-1" style="text-decoration:none;color:inherit">
+                            <div class="card-icon"><i class="fas fa-calculator"></i></div>
+                            <h3>BMI Calculator</h3>
+                            <p>Calculate your Body Mass Index and see where you fall on the scale</p>
+                        </a>
+                        <a href="#diet-guide" class="card animate-in animate-delay-2" style="text-decoration:none;color:inherit">
+                            <div class="card-icon"><i class="fas fa-utensils"></i></div>
+                            <h3>Diet & Protein Guide</h3>
+                            <p>Nutrition advice and sample meal plans for muscle building and fat loss</p>
+                        </a>
+                        <a href="#routine-generator" class="card animate-in animate-delay-3" style="text-decoration:none;color:inherit">
+                            <div class="card-icon"><i class="fas fa-calendar-alt"></i></div>
+                            <h3>Routine Generator</h3>
+                            <p>Generate complete workout routines for beginner, intermediate, and advanced</p>
+                        </a>
+                        <a href="#workout-log" class="card animate-in animate-delay-4" style="text-decoration:none;color:inherit">
+                            <div class="card-icon"><i class="fas fa-clipboard-list"></i></div>
+                            <h3>Workout Log</h3>
+                            <p>Track and log your daily workouts and review your training history</p>
+                        </a>
+                    </div>
+                </div>
+            </section>`;
+        }
+
+        window.filterSkills = function(level, btn) {
+            // Update active pill styling
+            document.querySelectorAll('#skillFilterPills .filter-pill').forEach(p => p.classList.remove('active'));
+            btn.classList.add('active');
+
+            // Filter the cards
+            const cards = document.querySelectorAll('.skill-card');
+            cards.forEach(card => {
+                if (level === 'all' || card.dataset.difficulty === level) {
+                    card.style.display = ''; // Reset to default display
+                } else {
+                    card.style.display = 'none'; // Hide non-matching
+                }
+            });
+        };
+
+        function renderSkill(key) {
+            const s = SKILLS[key];
+            if (!s) return renderHome();
+            const app = document.getElementById('app');
+
+            app.innerHTML = `
+            <section class="skill-hero">
+                <div style="position:relative;z-index:1">
+                    <span class="difficulty-badge ${s.diffClass}"><i class="fas fa-signal"></i> ${s.difficulty}</span>
+                    <h1 style="font-size:clamp(2rem,5vw,3.5rem);font-weight:900;margin-bottom:12px;letter-spacing:-1px">${s.name}</h1>
+                    <p style="color:var(--text-secondary);max-width:600px;margin:0 auto;font-size:1rem">${s.description}</p>
+                </div>
+            </section>
+
+            <div class="skill-content" style="padding-bottom:80px">
+                <!-- Video --> 
+                <div class="skill-section">
+                    <h3><i class="fas fa-play-circle"></i> Tutorial Video</h3>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/${s.videoId}" allowfullscreen loading="lazy" title="${s.name} Tutorial"></iframe>
+                    </div>
+                </div>
+
+                <!-- Required Strength -->
+                <div class="skill-section">
+                    <h3><i class="fas fa-dumbbell"></i> Targeted Muscles</h3>
+                    <div class="card" style="border-left:3px solid var(--accent)">
+                        <p style="font-size:1rem;font-weight:500">${s.strength}</p>
+                    </div>
+                </div>
+
+                <!-- Progressions -->
+                <div class="skill-section">
+                    <h3><i class="fas fa-stairs"></i> Step-by-Step Progression</h3>
+                    ${s.progressions.map((p, i) => `
+                        <div class="progression-step">
+                            <div class="step-number">${i+1}</div>
+                            <div class="step-content">
+                                <h4>${p.title}</h4>
+                                <p>${p.desc}</p>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+
+                <!-- Common Mistakes -->
+                <div class="skill-section">
+                    <h3><i class="fas fa-exclamation-triangle"></i> Common Mistakes</h3>
+                    ${s.mistakes.map(m => `
+                        <div class="mistake-item">
+                            <i class="fas fa-times-circle"></i>
+                            <span>${m}</span>
+                        </div>
+                    `).join('')}
+                </div>
+
+                <!-- Suggested Exercises -->
+                <div class="skill-section">
+                    <h3><i class="fas fa-list-check"></i> Suggested Exercises</h3>
+                    <div style="display:flex;flex-wrap:wrap;gap:4px">
+                        ${s.exercises.map(e => `<span class="exercise-chip"><i class="fas fa-check" style="color:var(--accent);font-size:0.7rem"></i> ${e}</span>`).join('')}
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-top:40px">
+                    ${getPrevSkill(key) ? `<a href="#skill-${getPrevSkill(key)}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> ${SKILLS[getPrevSkill(key)].name}</a>` : '<div></div>'}
+                    ${getNextSkill(key) ? `<a href="#skill-${getNextSkill(key)}" class="btn btn-primary">${SKILLS[getNextSkill(key)].name} <i class="fas fa-arrow-right"></i></a>` : '<div></div>'}
+                </div>
+            </div>`;
+        }
+
+        function getPrevSkill(key) {
+            const keys = Object.keys(SKILLS);
+            const idx = keys.indexOf(key);
+            return idx > 0 ? keys[idx-1] : null;
+        }
+
+        function getNextSkill(key) {
+            const keys = Object.keys(SKILLS);
+            const idx = keys.indexOf(key);
+            return idx < keys.length - 1 ? keys[idx+1] : null;
+        }
+
+        function renderWorkoutLog() {
+            const app = document.getElementById('app');
+            const logs = getWorkoutLog();
+
+            app.innerHTML = `
+            <div class="tool-container">
+                <div class="tool-header">
+                    <h1><i class="fas fa-clipboard-list" style="color:var(--accent)"></i> Workout Log</h1>
+                    <p>Record and review your training sessions</p>
+                </div>
+
+                <!-- Add Entry Form -->
+                <div class="card" style="margin-bottom:30px">
+                    <h3 style="margin-bottom:16px"><i class="fas fa-plus-circle" style="color:var(--accent)"></i> Log a Workout</h3>
+                    <div class="form-group">
+                        <label>Workout Name</label>
+                        <input type="text" id="logName" class="form-input" placeholder="e.g., Upper Body Push Day">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Duration (minutes)</label>
+                            <input type="number" id="logDuration" class="form-input" placeholder="60" min="1">
+                        </div>
+                        <div class="form-group">
+                            <label>Intensity</label>
+                            <select id="logIntensity" class="form-select">
+                                <option value="Low">Low</option>
+                                <option value="Medium" selected>Medium</option>
+                                <option value="High">High</option>
+                                <option value="Max">Max Effort</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Notes (optional)</label>
+                        <textarea id="logNotes" class="form-textarea" placeholder="How did it go? Any PRs?" rows="2"></textarea>
+                    </div>
+                    <button onclick="addWorkoutLog()" class="btn btn-primary"><i class="fas fa-save"></i> Save Workout</button>
+                </div>
+
+                <!-- Log Entries -->
+                <h3 style="margin-bottom:16px"><i class="fas fa-history" style="color:var(--accent)"></i> Recent Workouts (${logs.length})</h3>
+                ${logs.length === 0 ? `
+                    <div class="empty-state">
+                        <i class="fas fa-dumbbell"></i>
+                        <p>No workouts logged yet. Start training and log your first session!</p>
+                    </div>
+                ` : logs.slice().reverse().map((log, i) => `
+                    <div class="log-entry animate-in" style="animation-delay:${i*0.05}s">
+                        <div class="log-entry-info">
+                            <h4>${log.name}</h4>
+                            <p><i class="fas fa-clock" style="margin-right:4px"></i>${log.duration} min &nbsp;|&nbsp; <i class="fas fa-fire" style="margin-right:4px"></i>${log.intensity} &nbsp;|&nbsp; ${formatDate(log.date)}</p>
+                            ${log.notes ? `<p style="margin-top:4px;font-style:italic">"${log.notes}"</p>` : ''}
+                        </div>
+                        <div class="log-entry-actions">
+                            <button class="log-delete" onclick="deleteLog(${logs.length - 1 - i})" title="Delete"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                `).join('')}
+
+                ${logs.length > 0 ? `
+                <div style="text-align:center;margin-top:20px">
+                    <button onclick="clearAllLogs()" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Clear All Logs</button>
+                </div>` : ''}
+            </div>`;
+        }
+
+        window.addWorkoutLog = function() {
+            const name = document.getElementById('logName').value.trim();
+            const duration = document.getElementById('logDuration').value;
+            const intensity = document.getElementById('logIntensity').value;
+            const notes = document.getElementById('logNotes').value.trim();
+            if (!name) return showToast('Please enter a workout name');
+            const logs = getWorkoutLog();
+            logs.push({ name, duration: duration || '?', intensity, notes, date: new Date().toISOString() });
+            setWorkoutLog(logs);
+            showToast('Workout logged!');
+            renderWorkoutLog();
+        };
+
+        window.deleteLog = function(idx) {
+            const logs = getWorkoutLog();
+            logs.splice(idx, 1);
+            setWorkoutLog(logs);
+            showToast('Entry deleted');
+            renderWorkoutLog();
+        };
+
+        window.clearAllLogs = function() {
+            if (confirm('Delete all workout logs?')) {
+                localStorage.removeItem('cm_workoutlog');
+                showToast('All logs cleared');
+                renderWorkoutLog();
+            }
+        };
+
+        function renderExerciseFinder() {
+            const app = document.getElementById('app');
+            const muscles = [...new Set(EXERCISE_DB.map(e => e.muscle))];
+
+            app.innerHTML = `
+            <div class="tool-container">
+                <div class="tool-header">
+                    <h1><i class="fas fa-search" style="color:var(--accent)"></i> Exercise Finder</h1>
+                    <p>Search and filter calisthenics exercises by muscle group</p>
+                </div>
+
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="exerciseSearch" placeholder="Search exercises..." oninput="filterExercises()">
+                </div>
+
+                <div style="margin-bottom:8px;font-size:0.8rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px">Muscle Group</div>
+                <div class="filter-pills" id="musclePills">
+                    <button class="filter-pill active" onclick="setMuscleFilter('all',this)">All</button>
+                    ${muscles.map(m => `<button class="filter-pill" onclick="setMuscleFilter('${m}',this)">${m}</button>`).join('')}
+                </div>
+
+                <div id="exerciseResults" class="grid-3" style="margin-top:24px"></div>
+                <div id="exerciseCount" style="text-align:center;margin-top:16px;color:var(--text-muted);font-size:0.85rem"></div>
+            </div>`;
+
+            window._muscleFilter = 'all';
+            filterExercises();
+        }
+
+        window.setMuscleFilter = function(val, btn) {
+            window._muscleFilter = val;
+            document.querySelectorAll('#musclePills .filter-pill').forEach(p => p.classList.remove('active'));
+            btn.classList.add('active');
+            filterExercises();
+        };
+
+        window.filterExercises = function() {
+            const search = (document.getElementById('exerciseSearch')?.value || '').toLowerCase();
+            const results = EXERCISE_DB.filter(e => {
+                const matchSearch = e.name.toLowerCase().includes(search) || e.desc.toLowerCase().includes(search);
+                const matchMuscle = window._muscleFilter === 'all' || e.muscle === window._muscleFilter;
+                return matchSearch && matchMuscle;
+            });
+
+            const container = document.getElementById('exerciseResults');
+            const countEl = document.getElementById('exerciseCount');
+            if (!container) return;
+
+            // Map high-quality images to muscle groups
+            const muscleImages = {
+                'chest': 'https://images.unsplash.com/photo-1598971639058-fab3c3109a00?w=400&q=80',
+                'triceps': 'https://images.unsplash.com/photo-1530822847156-5df684ec5ee1?w=400&q=80',
+                'back': 'https://images.unsplash.com/photo-1598971484999-69de38622c1d?w=400&q=80',
+                'biceps': 'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=400&q=80',
+                'shoulders': 'https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?w=400&q=80',
+                'legs': 'https://images.unsplash.com/photo-1434682881908-b43d0467b798?w=400&q=80',
+                'core': 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=400&q=80',
+                'full body': 'https://images.unsplash.com/photo-1599058945522-28d584b6f4ff?w=400&q=80'
+            };
+
+            container.innerHTML = results.length === 0 ? `
+                <div class="empty-state" style="grid-column:1/-1">
+                    <i class="fas fa-search"></i>
+                    <p>No exercises found matching your filters</p>
+                </div>
+            ` : results.map((e, i) => `
+                <div class="exercise-card animate-in" style="animation-delay:${i*0.03}s">
+                    <div class="exercise-card-img" style="padding: 0;">
+                        <img src="${muscleImages[e.muscle] || muscleImages['full body']}" alt="${e.name}" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="exercise-card-body">
+                        <h4>${e.name}</h4>
+                        <p style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:8px">${e.desc}</p>
+                        <span class="exercise-tag">${e.muscle}</span>
+                    </div>
+                </div>
+            `).join('');
+
+            if (countEl) countEl.textContent = `Showing ${results.length} of ${EXERCISE_DB.length} exercises`;
+        };
+
+        function renderBMI() {
+            const app = document.getElementById('app');
+            app.innerHTML = `
+            <div class="tool-container">
+                <div class="tool-header">
+                    <h1><i class="fas fa-calculator" style="color:var(--accent)"></i> BMI Calculator</h1>
+                    <p>Calculate your Body Mass Index to understand your weight category</p>
+                </div>
+
+                <div class="card">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Height</label>
+                            <div style="display:flex;gap:8px">
+                                <input type="number" id="bmiHeight" class="form-input" placeholder="175" min="1">
+                                <select id="bmiHeightUnit" class="form-select" style="width:80px">
+                                    <option value="cm">cm</option>
+                                    <option value="in">in</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Weight</label>
+                            <div style="display:flex;gap:8px">
+                                <input type="number" id="bmiWeight" class="form-input" placeholder="75" min="1">
+                                <select id="bmiWeightUnit" class="form-select" style="width:80px">
+                                    <option value="kg">kg</option>
+                                    <option value="lb">lb</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="calculateBMI()" class="btn btn-primary btn-lg" style="width:100%"><i class="fas fa-calculator"></i> Calculate BMI</button>
+                </div>
+
+                <div id="bmiResult"></div>
+
+                <div class="card" style="margin-top:24px">
+                    <h3 style="margin-bottom:12px">BMI Categories</h3>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:0.85rem">
+                        <div style="padding:10px;background:rgba(0,170,255,0.1);border-radius:8px"><strong style="color:#00aaff">Underweight:</strong> &lt; 18.5</div>
+                        <div style="padding:10px;background:rgba(57,255,20,0.1);border-radius:8px"><strong style="color:#39ff14">Normal:</strong> 18.5 - 24.9</div>
+                        <div style="padding:10px;background:rgba(255,170,0,0.1);border-radius:8px"><strong style="color:#ffaa00">Overweight:</strong> 25 - 29.9</div>
+                        <div style="padding:10px;background:rgba(255,68,68,0.1);border-radius:8px"><strong style="color:#ff4444">Obese:</strong> 30+</div>
+                    </div>
+                    <p style="margin-top:12px;font-size:0.8rem;color:var(--text-muted)"><i class="fas fa-info-circle"></i> Note: BMI doesn't account for muscle mass. Athletes often have a higher BMI due to muscle, not fat. Use it as a general guideline only.</p>
+                </div>
+            </div>`;
+        }
+
+        window.calculateBMI = function() {
+            let height = parseFloat(document.getElementById('bmiHeight').value);
+            let weight = parseFloat(document.getElementById('bmiWeight').value);
+            const hUnit = document.getElementById('bmiHeightUnit').value;
+            const wUnit = document.getElementById('bmiWeightUnit').value;
+
+            if (!height || !weight) return showToast('Please enter height and weight');
+
+            if (hUnit === 'in') height *= 2.54;
+            if (wUnit === 'lb') weight *= 0.453592;
+
+            const heightM = height / 100;
+            const bmi = (weight / (heightM * heightM)).toFixed(1);
+
+            let category, color;
+            if (bmi < 18.5) { category = 'Underweight'; color = '#00aaff'; }
+            else if (bmi < 25) { category = 'Normal Weight'; color = '#39ff14'; }
+            else if (bmi < 30) { category = 'Overweight'; color = '#ffaa00'; }
+            else { category = 'Obese'; color = '#ff4444'; }
+
+            const pos = Math.min(Math.max((bmi - 12) / 30 * 100, 2), 98);
+
+            document.getElementById('bmiResult').innerHTML = `
+                <div class="bmi-result animate-in">
+                    <div class="bmi-value">${bmi}</div>
+                    <div class="bmi-category" style="color:${color}">${category}</div>
+                    <div class="bmi-scale" style="margin-top:20px;position:relative">
+                        <div class="underweight"></div>
+                        <div class="normal"></div>
+                        <div class="overweight"></div>
+                        <div class="obese"></div>
+                        <div style="position:absolute;top:-8px;left:${pos}%;transform:translateX(-50%);width:4px;height:24px;background:white;border-radius:2px;box-shadow:0 0 8px rgba(255,255,255,0.5)"></div>
+                    </div>
+                    <p style="margin-top:16px;color:var(--text-secondary);font-size:0.9rem">Height: ${height.toFixed(0)}cm | Weight: ${weight.toFixed(1)}kg</p>
+                </div>`;
+        };
+
+        window._currentDietPlan = 'bulk';
+
+        function renderDiet() {
+            const app = document.getElementById('app');
+            app.innerHTML = `
+            <div class="tool-container">
+                <div class="tool-header">
+                    <h1><i class="fas fa-utensils" style="color:var(--accent)"></i> Diet & Protein Guide</h1>
+                    <p>Nutrition recommendations for calisthenics athletes</p>
+                </div>
+
+                <!-- Protein Calculator -->
+                <div class="card" style="margin-bottom:30px">
+                    <h3 style="margin-bottom:16px"><i class="fas fa-calculator" style="color:var(--accent)"></i> Protein Intake Calculator</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Body Weight (kg)</label>
+                            <input type="number" id="proteinWeight" class="form-input" placeholder="75" min="1">
+                        </div>
+                        <div class="form-group">
+                            <label>Goal</label>
+                            <select id="proteinGoal" class="form-select">
+                                <option value="maintain">Maintain Muscle</option>
+                                <option value="build">Build Muscle</option>
+                                <option value="lose">Lose Fat</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button onclick="calcProtein()" class="btn btn-primary"><i class="fas fa-calculator"></i> Calculate</button>
+                    <div id="proteinResult"></div>
+                </div>
+
+                <!-- Meal Plans -->
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:16px;">
+                    <div class="tabs" id="dietTabs" style="margin-bottom:0; border-bottom:none;">
+                        <button class="tab-btn active" onclick="switchDietTab('bulk',this)">Bulking</button>
+                        <button class="tab-btn" onclick="switchDietTab('cut',this)">Cutting</button>
+                        <button class="tab-btn" onclick="switchDietTab('maintain',this)">Maintenance</button>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <label style="font-size:0.9rem; color:var(--text-secondary); font-weight:600;">Diet Preference:</label>
+                        <select id="dietPrefSelect" class="form-select" style="width:140px; padding:8px 32px 8px 12px; font-size:0.85rem;" onchange="refreshDietTab()">
+                            <option value="">Standard</option>
+                            <option value="veg_">Vegetarian</option>
+                        </select>
+                    </div>
+                </div>
+                <div style="border-bottom:1px solid var(--border); margin-bottom:24px; margin-top:-10px;"></div>
+
+                <div id="mealPlanContent"></div>
+
+                <!-- General Tips -->
+                <div class="card" style="margin-top:30px">
+                    <h3 style="margin-bottom:16px"><i class="fas fa-lightbulb" style="color:var(--accent)"></i> Nutrition Tips for Calisthenics</h3>
+                    <div style="display:flex;flex-direction:column;gap:10px">
+                        ${[
+                            'Eat protein within 2 hours after training for optimal recovery',
+                            'Stay hydrated - aim for 3-4 liters of water daily',
+                            'Time carbs around your workouts for best energy levels',
+                            'Don\'t fear fats - they are essential for hormone production',
+                            'Include colorful vegetables for micronutrient coverage',
+                            'Sleep 7-9 hours - recovery happens during sleep',
+                            'Consider creatine monohydrate (5g/day) - safe and effective',
+                            'Track your intake for a few weeks to understand your habits'
+                        ].map(tip => `
+                            <div style="display:flex;gap:10px;align-items:start;font-size:0.9rem">
+                                <i class="fas fa-check-circle" style="color:var(--accent);margin-top:3px;flex-shrink:0"></i>
+                                <span style="color:var(--text-secondary)">${tip}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            </div>`;
+            switchDietTab('bulk', document.querySelector('#dietTabs .tab-btn.active'));
+        }
+
+        window.calcProtein = function() {
+            const weight = parseFloat(document.getElementById('proteinWeight').value);
+            const goal = document.getElementById('proteinGoal').value;
+            if (!weight) return showToast('Please enter your weight');
+
+            let min, max, label;
+            if (goal === 'build') { min = 1.8; max = 2.2; label = 'Muscle Building'; }
+            else if (goal === 'lose') { min = 2.0; max = 2.4; label = 'Fat Loss (high protein preserves muscle)'; }
+            else { min = 1.4; max = 1.8; label = 'Maintenance'; }
+
+            document.getElementById('proteinResult').innerHTML = `
+                <div style="margin-top:20px;padding:20px;background:var(--accent-dim);border:1px solid rgba(57,255,20,0.3);border-radius:var(--radius)" class="animate-in">
+                    <div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:4px">${label}</div>
+                    <div style="font-size:2rem;font-weight:900;color:var(--accent)">${Math.round(weight*min)}g - ${Math.round(weight*max)}g</div>
+                    <div style="font-size:0.85rem;color:var(--text-secondary);margin-top:4px">protein per day (${min}-${max}g per kg bodyweight)</div>
+                </div>`;
+        };
+
+        window.switchDietTab = function(plan, btn) {
+            window._currentDietPlan = plan;
+            if (btn) {
+                document.querySelectorAll('#dietTabs .tab-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            }
+            const prefix = document.getElementById('dietPrefSelect') ? document.getElementById('dietPrefSelect').value : '';
+            const data = MEALS[prefix + plan];
+            
+            document.getElementById('mealPlanContent').innerHTML = `
+                <div class="animate-in">
+                    <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:20px">
+                        <div>
+                            <h3>${data.title}</h3>
+                            <p style="color:var(--text-secondary);font-size:0.9rem">Sample daily meal plan</p>
+                        </div>
+                        <div style="text-align:right">
+                            <div style="font-size:0.8rem;color:var(--text-muted)">Daily Targets</div>
+                            <div style="color:var(--accent);font-weight:700">${data.calories} cal | ${data.protein} protein</div>
+                        </div>
+                    </div>
+                    <div class="grid-2">
+                        ${data.meals.map(meal => `
+                            <div class="meal-card">
+                                <h4><i class="fas fa-utensils"></i> ${meal.time}</h4>
+                                <ul>
+                                    ${meal.items.map(item => `<li><i class="fas fa-circle" style="font-size:0.4rem"></i> ${item}</li>`).join('')}
+                                </ul>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>`;
+        };
+
+        window.refreshDietTab = function() {
+            window.switchDietTab(window._currentDietPlan, null);
+        };
+
+        function renderRoutine() {
+            const app = document.getElementById('app');
+            app.innerHTML = `
+            <div class="tool-container">
+                <div class="tool-header">
+                    <h1><i class="fas fa-calendar-alt" style="color:var(--accent)"></i> Daily Routine Generator</h1>
+                    <p>Complete calisthenics workout programs for every level</p>
+                </div>
+
+                <div class="tabs" id="routineTabs">
+                    <button class="tab-btn active" onclick="switchRoutineTab('beginner',this)"><i class="fas fa-seedling"></i> Beginner</button>
+                    <button class="tab-btn" onclick="switchRoutineTab('intermediate',this)"><i class="fas fa-fire"></i> Intermediate</button>
+                    <button class="tab-btn" onclick="switchRoutineTab('advanced',this)"><i class="fas fa-crown"></i> Advanced</button>
+                </div>
+
+                <div id="routineContent"></div>
+            </div>`;
+            switchRoutineTab('beginner', document.querySelector('#routineTabs .tab-btn.active'));
+        }
+
+        window.switchRoutineTab = function(level, btn) {
+            document.querySelectorAll('#routineTabs .tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const data = ROUTINES[level];
+            document.getElementById('routineContent').innerHTML = `
+                <div class="animate-in">
+                    <div style="margin-bottom:24px">
+                        <h2>${data.title}</h2>
+                        <p style="color:var(--text-secondary)">${data.subtitle}</p>
+                    </div>
+                    ${data.days.map((day, i) => `
+                        <div class="routine-day">
+                            <div class="routine-day-header" onclick="this.parentElement.classList.toggle('expanded')">
+                                <i class="fas fa-calendar-day" style="color:var(--accent)"></i>
+                                <span>${day.name}</span>
+                                <i class="fas fa-chevron-down" style="margin-left:auto;font-size:0.8rem;transition:transform 0.3s"></i>
+                            </div>
+                            <div class="routine-day-body">
+                                ${day.exercises.map(ex => `
+                                    <div class="routine-exercise">
+                                        <span>${ex.name}</span>
+                                        <span>${ex.sets}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>`;
+        };
+
+        function renderWarmup() {
+            const app = document.getElementById('app');
+            app.innerHTML = `
+            <div class="tool-container">
+                <div class="tool-header">
+                    <h1><i class="fas fa-fire" style="color:var(--accent)"></i> Warm-up Guide</h1>
+                    <p>A comprehensive warm-up routine to prepare your body for calisthenics training</p>
+                </div>
+
+                <div class="card" style="margin-bottom:30px;border-left:3px solid var(--accent)">
+                    <h3 style="color:var(--danger);margin-bottom:8px"><i class="fas fa-exclamation-triangle"></i> Never Skip Your Warm-up!</h3>
+                    <p style="color:var(--text-secondary);font-size:0.9rem">A proper warm-up reduces injury risk by up to 50%, improves performance, increases flexibility, and prepares your joints and tendons for intense training. Spend at least 10-15 minutes warming up before every session.</p>
+                </div>
+
+                ${WARMUP_STEPS.map((step, i) => `
+                    <div class="warmup-step animate-in" style="animation-delay:${i*0.05}s">
+                        <div class="warmup-num">${i+1}</div>
+                        <div class="warmup-info">
+                            <h4><i class="fas ${step.icon}" style="color:var(--accent);margin-right:8px"></i>${step.name}</h4>
+                            <p>${step.desc}</p>
+                            <div class="duration"><i class="fas fa-clock"></i> ${step.duration}</div>
+                        </div>
+                    </div>
+                `).join('')}
+
+                <div class="card" style="margin-top:30px;text-align:center">
+                    <h3 style="margin-bottom:12px"><i class="fas fa-stopwatch" style="color:var(--accent)"></i> Total Warm-up Time</h3>
+                    <div style="font-size:2.5rem;font-weight:900;color:var(--accent)">12-15 minutes</div>
+                    <p style="color:var(--text-secondary);margin-top:8px">Adjust based on weather, time of day, and training intensity</p>
+                </div>
+            </div>`;
+        }
+
+        function renderFAQ() {
+            const app = document.getElementById('app');
+            app.innerHTML = `
+            <div class="tool-container">
+                <div class="tool-header">
+                    <h1><i class="fas fa-question-circle" style="color:var(--accent)"></i> Calisthenics FAQ</h1>
+                    <p>Answers to the most common questions about bodyweight training</p>
+                </div>
+
+                ${FAQ_DATA.map((item, i) => `
+                    <div class="faq-item animate-in" style="animation-delay:${i*0.04}s">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span>${item.q}</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">${item.a}</div>
+                        </div>
+                    </div>
+                `).join('')}
+
+                <div class="card" style="margin-top:30px;text-align:center">
+                    <h3 style="margin-bottom:12px">Still have questions?</h3>
+                    <p style="color:var(--text-secondary);margin-bottom:16px">Feel free to reach out and we will help you on your journey</p>
+                    <a href="#contact" class="btn btn-primary"><i class="fas fa-envelope"></i> Contact Us</a>
+                </div>
+            </div>`;
+        }
+
+        window.toggleFAQ = function(el) {
+            const item = el.parentElement;
+            const wasOpen = item.classList.contains('open');
+            document.querySelectorAll('.faq-item').forEach(i => {
+                i.classList.remove('open');
+                i.querySelector('.faq-answer').style.maxHeight = '0';
+            });
+            if (!wasOpen) {
+                item.classList.add('open');
+                const answer = item.querySelector('.faq-answer');
+                answer.style.maxHeight = answer.scrollHeight + 'px';
+            }
+        };
+
+        function renderAbout() {
+            const app = document.getElementById('app');
+            app.innerHTML = `
+            <div class="tool-container" style="max-width:800px">
+                <div class="tool-header">
+                    <div class="about-avatar"><i class="fas fa-user"></i></div>
+                    <h1>About the Creator</h1>
+                    <p style="color:var(--text-secondary)">Passionate about bodyweight training and helping others unlock their potential</p>
+                </div>
+
+                <div class="card animate-in" style="margin-bottom:24px">
+                    <h3 style="margin-bottom:12px"><i class="fas fa-heart" style="color:var(--accent)"></i> Our Mission</h3>
+                    <p style="color:var(--text-secondary);line-height:1.8;font-size:0.95rem">
+                        Calisthenics & Bodyweight Mastery Hub was created to be the ultimate free resource for anyone looking to master bodyweight training.
+                        Whether you are a complete beginner wondering how to hold your first L-sit, or an advanced athlete working towards a full planche,
+                        this platform provides structured progressions, detailed tutorials, and tools to track your journey.
+                    </p>
+                </div>
+
+                <div class="card animate-in animate-delay-1" style="margin-bottom:24px">
+                    <h3 style="margin-bottom:12px"><i class="fas fa-star" style="color:var(--accent)"></i> What We Offer</h3>
+                    <div style="display:flex;flex-direction:column;gap:12px">
+                        ${[
+                            { icon: 'fa-graduation-cap', title: '14 Detailed Skill Tutorials', desc: 'Step-by-step progressions from beginner to elite' },
+                            { icon: 'fa-tools', title: 'Training Tools', desc: 'BMI calculator, exercise finder, and routine generator' },
+                            { icon: 'fa-clipboard-list', title: 'Workout Logging', desc: 'Track your workout history with localStorage' },
+                            { icon: 'fa-utensils', title: 'Nutrition Guidance', desc: 'Protein calculator and sample meal plans for every goal' },
+                            { icon: 'fa-mobile-alt', title: 'Mobile-Friendly', desc: 'Train anywhere with our responsive design' }
+                        ].map(item => `
+                            <div style="display:flex;gap:14px;align-items:start">
+                                <div style="width:40px;height:40px;background:var(--accent-dim);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                                    <i class="fas ${item.icon}" style="color:var(--accent)"></i>
+                                </div>
+                                <div>
+                                    <h4 style="font-size:0.95rem;margin-bottom:2px">${item.title}</h4>
+                                    <p style="color:var(--text-secondary);font-size:0.85rem">${item.desc}</p>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+
+                <div class="card animate-in animate-delay-2" style="text-align:center">
+                    <h3 style="margin-bottom:16px"><i class="fas fa-rocket" style="color:var(--accent)"></i> Start Your Journey</h3>
+                    <p style="color:var(--text-secondary);margin-bottom:20px">Every expert was once a beginner. Your transformation starts with one decision.</p>
+                    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+                        <a href="#skill-lsit" class="btn btn-primary"><i class="fas fa-play"></i> Begin Training</a>
+                        <a href="#contact" class="btn btn-secondary"><i class="fas fa-envelope"></i> Get in Touch</a>
+                    </div>
+                </div>
+            </div>`;
+        }
+
+        function renderContact() {
+            const app = document.getElementById('app');
+            app.innerHTML = `
+            <div class="tool-container" style="max-width:800px">
+                <div class="tool-header">
+                    <h1><i class="fas fa-envelope" style="color:var(--accent)"></i> Contact Us</h1>
+                    <p>Have questions, feedback, or suggestions? We'd love to hear from you!</p>
+                </div>
+
+                <div class="grid-3" style="margin-bottom:30px">
+                    <div class="contact-info-card animate-in">
+                        <div class="ci-icon"><i class="fas fa-envelope"></i></div>
+                        <div>
+                            <h4 style="font-size:0.9rem">Email</h4>
+                            <p style="color:var(--text-secondary);font-size:0.85rem"><a href="mailto:amninder2726@gmail.com" style="color:inherit;">amninder2726@gmail.com</a></p>
+                        </div>
+                    </div>
+                    <div class="contact-info-card animate-in animate-delay-1">
+                        <div class="ci-icon"><i class="fas fa-map-marker-alt"></i></div>
+                        <div>
+                            <h4 style="font-size:0.9rem">Location</h4>
+                            <p style="color:var(--text-secondary);font-size:0.85rem">Worldwide (Online)</p>
+                        </div>
+                    </div>
+                    <div class="contact-info-card animate-in animate-delay-2">
+                        <div class="ci-icon"><i class="fas fa-clock"></i></div>
+                        <div>
+                            <h4 style="font-size:0.9rem">Response Time</h4>
+                            <p style="color:var(--text-secondary);font-size:0.85rem">Within 24 hours</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card animate-in animate-delay-3">
+                    <h3 style="margin-bottom:20px"><i class="fas fa-paper-plane" style="color:var(--accent)"></i> Send a Message</h3>
+                    <form id="contactForm" onsubmit="handleContact(event)">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Your Name *</label>
+                                <input type="text" class="form-input" id="contactName" placeholder="John Doe" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Email Address *</label>
+                                <input type="email" class="form-input" id="contactEmail" placeholder="john@example.com" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Subject *</label>
+                            <select class="form-select" id="contactSubject" required>
+                                <option value="">Select a topic...</option>
+                                <option>General Question</option>
+                                <option>Training Advice</option>
+                                <option>Bug Report</option>
+                                <option>Feature Request</option>
+                                <option>Partnership</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Message *</label>
+                            <textarea class="form-textarea" id="contactMessage" placeholder="Write your message here..." required rows="5"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-lg" style="width:100%"><i class="fas fa-paper-plane"></i> Send Message</button>
+                    </form>
+                </div>
+            </div>`;
+        }
+
+        window.handleContact = function(e) {
+            e.preventDefault();
+            const name = document.getElementById('contactName').value;
+            const email = document.getElementById('contactEmail').value;
+            const subject = document.getElementById('contactSubject').value;
+            const message = document.getElementById('contactMessage').value;
+            
+            // Construct the mailto link
+            const mailtoLink = `mailto:amninder2726@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent("From: " + name + " (" + email + ")\n\n" + message)}`;
+            
+            // Try to open it using window.open (bypasses most iframe top-navigation blocks)
+            window.open(mailtoLink, '_blank');
+
+            // Provide a direct clickable fallback link inside the notification toast
+            let container = document.querySelector('.toast-container');
+            if (!container) {
+                container = document.createElement('div');
+                container.className = 'toast-container';
+                document.body.appendChild(container);
+            }
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.style.animation = 'toastIn 0.3s ease, toastOut 0.3s ease 4.7s both'; // Show for 5 seconds
+            toast.innerHTML = `
+                <div style="text-align:center;">
+                    <i class="fas fa-envelope" style="color:var(--accent);margin-right:6px"></i> Opening email app...<br>
+                    <a href="${mailtoLink}" target="_blank" style="color:var(--accent); font-weight:bold; text-decoration:underline; font-size:0.85rem; margin-top:8px; display:inline-block;">Click here if it doesn't open automatically</a>
+                </div>
+            `;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 5000);
+
+            document.getElementById('contactForm').reset();
+        };
+
+        // ==================== NAVIGATION & UI ====================
+
+        function closeMobileMenu() {
+            document.getElementById('mobileMenu').classList.remove('open');
+            const overlay = document.querySelector('.mobile-overlay');
+            if (overlay) overlay.remove();
+        }
+
+        function openMobileMenu() {
+            document.getElementById('mobileMenu').classList.add('open');
+            if (!document.querySelector('.mobile-overlay')) {
+                const overlay = document.createElement('div');
+                overlay.className = 'mobile-overlay show';
+                overlay.addEventListener('click', closeMobileMenu);
+                document.body.appendChild(overlay);
+            }
+        }
+
+        // ==================== INIT ====================
+
+        function init() {
+            // Route handling
+            window.addEventListener('hashchange', handleRoute);
+            handleRoute();
+
+            // Mobile menu
+            document.getElementById('mobileMenuBtn').addEventListener('click', openMobileMenu);
+            document.getElementById('closeMobileMenu').addEventListener('click', closeMobileMenu);
+
+            // Mobile menu link clicks
+            document.querySelectorAll('.mobile-link').forEach(link => {
+                link.addEventListener('click', closeMobileMenu);
+            });
+
+            // Dropdown menu clicks close mobile
+            document.querySelectorAll('.dropdown-menu a').forEach(link => {
+                link.addEventListener('click', () => {
+                    // Close any open dropdowns
+                });
+            });
+
+            // Dark mode toggle
+            const dmToggle = document.getElementById('darkModeToggle');
+            const savedMode = localStorage.getItem('cm_lightmode');
+            if (savedMode === 'true') {
+                document.body.classList.add('light-mode');
+                dmToggle.innerHTML = '<i class="fas fa-moon"></i>';
+            }
+            dmToggle.addEventListener('click', () => {
+                document.body.classList.toggle('light-mode');
+                const isLight = document.body.classList.contains('light-mode');
+                dmToggle.innerHTML = isLight ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+                localStorage.setItem('cm_lightmode', isLight);
+            });
+
+            // Scroll behavior
+            const navbar = document.getElementById('navbar');
+            const scrollBtn = document.getElementById('scrollTopBtn');
+            window.addEventListener('scroll', () => {
+                navbar.classList.toggle('scrolled', window.scrollY > 50);
+                scrollBtn.classList.toggle('visible', window.scrollY > 400);
+            });
+
+            scrollBtn.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            // Prevent dropdown toggle default
+            document.querySelectorAll('.dropdown-toggle').forEach(toggle => {
+                toggle.addEventListener('click', (e) => {
+                    e.preventDefault();
+                });
+            });
+        }
+
+        // Start app
+        document.addEventListener('DOMContentLoaded', init);
+
+        })();
+    </script>
+</body>
+</html>
